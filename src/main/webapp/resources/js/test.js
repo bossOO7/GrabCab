@@ -46,8 +46,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	               return str.join("&");
 	           },
 	           data:{
-	               username:"raghu.kolisetty@gmail.com",
-	               password:"raghu"
+	               username:"raghu",
+	               password:"raghu",
+	               type:"driver"
 	           }
 	
 	       }).then(function(data){

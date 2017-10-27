@@ -1,9 +1,5 @@
 package com.sjsu.grabCab.security;
 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,33 +10,29 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-import com.sjsu.grabCab.dao.*;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private DataSource dataSource;
-	// @Autowired
-	// private BCryptPasswordEncoder bcryptEncoder;
-	@Autowired
-	private PassengerDAO passengerDAO;
 	
 	@Autowired
-	private DriverDAO driverDAO;
-
-	@Autowired
 	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@Autowired
+	private PassengerAuthenticationProvider passengerAuthenticationProvider;
+	
+	@Autowired
+	private DriverAuthenticationProvider driverAuthenticationProvider;
 
 	@Autowired
 	private MySavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(passengerDAO)
-		.passwordEncoder(passwordEncoder());
-//		auth.userDetailsService(driverDAO)
+//		auth.userDetailsService(passengerDAO)
 //		.passwordEncoder(passwordEncoder());
+		auth.authenticationProvider(passengerAuthenticationProvider);
+		auth.authenticationProvider(driverAuthenticationProvider);
 	}
 
 	public BCryptPasswordEncoder passwordEncoder() {

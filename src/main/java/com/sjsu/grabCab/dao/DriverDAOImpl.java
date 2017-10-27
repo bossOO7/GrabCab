@@ -49,4 +49,20 @@ public class DriverDAOImpl implements DriverDAO{
 		return (UserDetails) list.get(0);
 	}
 
+	@Override
+	public Driver getDriver(String username) {
+		Session session = sessionFactory.getCurrentSession();
+		System.out.println(username);
+		Query query = session.createQuery("from Driver where username = :username or email = :username ");
+		query.setParameter("username", username);
+		List list = query.list();
+		System.out.println(list.isEmpty());
+		if(list.size()==0){
+			//throw new Exception("No user found with that username");
+		}
+		Driver d = (Driver) list.get(0);
+		System.out.println(d.getUsername());
+		return d;
+	}
+
 }
