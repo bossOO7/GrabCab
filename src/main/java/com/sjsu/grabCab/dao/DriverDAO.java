@@ -8,7 +8,7 @@ import com.sjsu.grabCab.entity.Passenger;
 
 public interface DriverDAO extends UserDetailsService{
 	
-	String addUser(String username, String password, String email);
+	boolean addUser(String username, String password, String email);
 	
 	public UserDetails loadUserByUsername(String username);
 	

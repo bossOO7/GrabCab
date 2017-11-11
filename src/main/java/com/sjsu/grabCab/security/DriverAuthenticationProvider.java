@@ -2,34 +2,26 @@ package com.sjsu.grabCab.security;
 
 import java.util.Collections;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.sjsu.grabCab.dao.DriverDAO;
-import com.sjsu.grabCab.dao.PassengerDAO;
 import com.sjsu.grabCab.entity.Driver;
-import com.sjsu.grabCab.entity.Passenger;
+
 
 @Component
 public class DriverAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private DriverDAO driverDAO;
-
-//	@Autowired 
-//	private HttpServletRequest request;
-//	
-
 	
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
@@ -38,13 +30,17 @@ public class DriverAuthenticationProvider implements AuthenticationProvider {
 		
 		ServletRequestAttributes attrs = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
 		System.out.println("printing type "+attrs.getRequest().getParameter("type"));
-		Driver p = driverDAO.getDriver(username);
+		if(!attrs.getRequest().getParameter("type").equalsIgnoreCase("driver")){
+			throw new BadCredentialsException("External system authentication failed");
+		}
+		Driver d = driverDAO.getDriver(username);
 
-		if (p == null) {
+		if (d == null) {
 			throw new BadCredentialsException("External system authentication failed");
 		} else {
-			System.out.println(p.getUsername()+p.getPassword());
-			if (p.getUsername().equals(username) && p.getPassword().equals(password)) {
+			System.out.println(d.getUsername()+d.getPassword());
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			if (passwordEncoder.matches(password, d.getPassword())) {
 				return new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
 			} else {
 				throw new BadCredentialsException("External system authentication failed");

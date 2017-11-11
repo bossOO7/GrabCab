@@ -1,68 +1,81 @@
 package com.sjsu.grabCab.dao;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.sjsu.grabCab.entity.Driver;
-import com.sjsu.grabCab.entity.Passenger;
 
-@Transactional
 @Repository
 public class DriverDAOImpl implements DriverDAO{
-
+	
 	@Autowired
-	private SessionFactory sessionFactory;
+	private Database database;
+	
+	@Autowired
+	private PrepareQuery prepareQuery;
 	
 	@Override
-	public String addUser(String username, String password, String email) {
-		Session session = sessionFactory.getCurrentSession();
+	public boolean addUser(String username, String password, String email) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String p = passwordEncoder.encode(password);
-		Driver user = new Driver(username,p, email);
-		//Passenger user = new Passenger(username,password);
-		session.save(user);
-		return null;
+		String query = "Insert into Driver(username,password,email) values ( \""+username+"\",\""+p+"\",\""+email+"\")";
+		try {
+			database.executeUpdate(query);
+			return true;
+		} catch (SQLException e) {
+			System.out.println("exception received");
+		}
+		return false;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		System.out.println("from dao impl"+username);
-		Session session = sessionFactory.getCurrentSession();
 		System.out.println(username);
-		Query query = session.createQuery("from Driver where username = :username or email = :username ");
-		query.setParameter("username", username);
-		List list = query.list();
-		System.out.println(list.isEmpty());
-		if(list.size()==0){
+		prepareQuery.setQuery("select *from Driver where username = ? or email = ?");
+		prepareQuery.substitue(username);
+		prepareQuery.substitue(username);
+		String query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		try {
+			 rows = database.executeQuery(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(rows.isEmpty());
+		if(rows.size()==0){
 			//throw new Exception("No user found with that username");
 		}
-		Driver d = (Driver) list.get(0);
-		System.out.println(d.getUsername());
-		return (UserDetails) list.get(0);
+		Driver d = new Driver((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"));
+		return (UserDetails) d;
 	}
 
 	@Override
 	public Driver getDriver(String username) {
-		Session session = sessionFactory.getCurrentSession();
-		System.out.println(username);
-		Query query = session.createQuery("from Driver where username = :username or email = :username ");
-		query.setParameter("username", username);
-		List list = query.list();
-		System.out.println(list.isEmpty());
-		if(list.size()==0){
-			//throw new Exception("No user found with that username");
+		prepareQuery.setQuery("select *from Driver where username = ? or email = ?");
+		prepareQuery.substitue(username);
+		prepareQuery.substitue(username);
+		String query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		try{
+			rows = database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
 		}
-		Driver d = (Driver) list.get(0);
-		System.out.println(d.getUsername());
-		return d;
+		if(rows.size()==0){
+			System.out.println("didn't get any rows back");
+			return null;
+		}
+		else{
+			Driver d = new Driver((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"));
+			return d;
+		}
 	}
 
 }

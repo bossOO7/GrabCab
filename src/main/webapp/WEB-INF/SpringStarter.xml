@@ -24,37 +24,17 @@
 		<property name="prefix" value="/WEB-INF/view/" />
 
 	</bean>
-
-	<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
-	<!-- <mvc:resources mapping="/static/**" location="/WEB-INF/static/"></mvc:resources> -->
-
-		<!-- Step 6: Setup DataSource/ ConnectionPool -->
+	
+	<!-- Step 6: Setup DataSource/ ConnectionPool -->
 	<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/cmpe226?useSSL=false" />
 		<property name="username" value="grabCab" />
 		<property name="password" value="grabCab" />
 	</bean>
-
-	<!-- Step 7: Setup Hibernate session factory -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<property name="dataSource" ref="myDataSource" />
-		<property name="packagesToScan" value="com.sjsu.grabCab.entity" />
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-			</props>
-		</property>
-	</bean>
-
-	<!-- Step 8: Setup Hibernate transaction manager -->
-	<bean id="myTransactionManager"
-		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+	
+	<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+	<!-- <mvc:resources mapping="/static/**" location="/WEB-INF/static/"></mvc:resources> -->
 
 	<!-- Step 9: Enable configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="myTransactionManager" />

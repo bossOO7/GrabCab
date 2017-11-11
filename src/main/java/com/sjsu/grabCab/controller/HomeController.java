@@ -19,7 +19,6 @@ public class HomeController {
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String showHome(){
 		
-		//passengerDAO.addUser("raghu", "raghu", "raghu.kolisetty@gmail.com");
 		return "home.jsp";
 	}
 	
