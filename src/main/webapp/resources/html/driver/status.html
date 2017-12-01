@@ -1,0 +1,21 @@
+<html ng-app="routerApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Status of the </title>
+</head>
+<body>
+<h1>Ride Status!!! </h1>
+<div class="container-fluid">
+	<div class = "row">
+		<div class = "col-md-4"></div>
+		<div class = "col-md-4">
+		<h3>RideID: </h3><p> {{RideID}} </p>
+		<h3>RideStatus: </h3><p> {{rideStatus}} </p>
+			<form>
+			  <button type="submit" class="btn btn-default" ng-click = "endRide()">End Ride</button>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

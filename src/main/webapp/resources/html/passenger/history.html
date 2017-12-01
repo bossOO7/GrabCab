@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('MyApp', [])
+        app.controller('MyController', function ($scope) {
+            //This will hide the DIV by default.
+            $scope.IsHidden = true;
+            $scope.ShowHide = function () {
+                //If DIV is hidden it will be visible and vice versa.
+                $scope.IsHidden = $scope.IsHidden ? false : true;
+            }
+        });
+    </script>
+    <div ng-app="MyApp" ng-controller="MyController">
+        <input type="button" value="Show Hide DIV" ng-click="ShowHide()" />
+        <br />
+        <br />
+        <div ng-hide = "IsHidden">My DIV</div>
+    </div>
+</body>
+</html>

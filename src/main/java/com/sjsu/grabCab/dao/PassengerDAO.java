@@ -7,7 +7,7 @@ import com.sjsu.grabCab.entity.Passenger;
 
 public interface PassengerDAO  extends UserDetailsService{
 	
-	Boolean addUser(String username, String password, String email);
+	Boolean addUser(String username, String password, String email, String phone);
 	
 	public UserDetails loadUserByUsername(String username);
 	

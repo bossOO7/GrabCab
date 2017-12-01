@@ -1,0 +1,31 @@
+<html ng-app="routerApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container-fluid">
+	<div class = "row">
+		<div class = "col-md-4"></div>
+		<div class = "col-md-4">
+			<form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Email or Username</label>
+			    <input type="string" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="email">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Password</label>
+			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password">
+			  </div>
+			  <div class="form-group">
+     	 		<label><input type="radio" name="driverOrPassenger" ng-model="driverOrPassenger" ng-value="'driver'">driver</label>
+     	 		<label><input type="radio" name="driverOrPassenger" ng-model="driverOrPassenger" ng-value="'passenger'">passenger</label>
+    		  </div>
+			  <button type="submit" class="btn btn-default" ng-click = "login()">Login</button>
+			  <button type="button" class="btn btn-default" ng-click = "switchToRegister()">Register</button>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

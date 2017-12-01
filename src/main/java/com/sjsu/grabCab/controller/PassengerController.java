@@ -1,6 +1,5 @@
 package com.sjsu.grabCab.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +16,22 @@ import com.sjsu.grabCab.entity.Passenger;
 public class PassengerController {
 	@Autowired
 	PassengerDAO passengerDAO;
-	
-	@RequestMapping(value="/testing", method = RequestMethod.POST)
-	public @ResponseBody Passenger test(){
-		
-		return new Passenger("test","test","test");
-		
+
+	@RequestMapping(value = "/testing", method = RequestMethod.POST)
+	public @ResponseBody Passenger test() {
+
+		return new Passenger("test", "test", "test", "test");
+
 	}
-	
-	@RequestMapping(value="/passenger", method = RequestMethod.POST)
-	public ResponseEntity addPassenger(@RequestParam("email") String email
-			,@RequestParam("password") String password, @RequestParam("username") String username){
-		
-		if(passengerDAO.addUser(username, password, email))
+
+	@RequestMapping(value = "/passenger", method = RequestMethod.POST)
+	public ResponseEntity addPassenger(@RequestParam("email") String email, @RequestParam("password") String password,
+			@RequestParam("username") String username, @RequestParam("phone") String phone) {
+
+		if (passengerDAO.addUser(username, password, email, phone))
 			return ResponseEntity.ok(null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-		
+
 	}
-	
-	
+
 }

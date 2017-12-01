@@ -1,0 +1,21 @@
+<html ng-app="routerApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Accept Ride</title>
+</head>
+<body>
+<table>
+<tr ng-repeat="ride in data">
+        <td>{{ride.ride_ID}}</td>
+        <td>{{ride.ride_pickupLocation}}</td>
+        <td>
+      <input type="radio" name="accept" value="yes">
+    </td>
+</tr>
+</table>
+<div class="container-fluid">
+	<h1>Accept a Ride</h1>
+	<button type="button" class="btn btn-default" ng-click = "switchToRideStatus()">Accept</button>
+</div>>
+</body>
+</html>

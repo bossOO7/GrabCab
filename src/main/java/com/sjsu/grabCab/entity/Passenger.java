@@ -17,6 +17,15 @@ public class Passenger implements UserDetails{
 	
 	private String email;
 	
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	public String getEmail() {
 		return email;
@@ -47,11 +56,12 @@ public class Passenger implements UserDetails{
 	}
 
 
-	public Passenger(String username, String password, String email) {
+	public Passenger(String username, String password, String email, String phone) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.phone = phone;
 	}
 
 	@Override

@@ -1,35 +1,67 @@
 <html ng-app="routerApp">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title></title>
+</head>
 </head>
 <body>
-<div class="container-fluid">
-	<div class = "row">
-		<div class = "col-md-4"></div>
-		<div class = "col-md-4">
-			<form>
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">Email address</label>
-			    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="email">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">Username</label>
-			    <input type="string" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="username">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Password</label>
-			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password">
-			  </div>
-			  <div class="form-group">
-     	 		<label><input type="radio" name="driverOrPassenger" ng-model="driverOrPassenger" ng-value="'driver'">driver</label>
-     	 		<label><input type="radio" name="driverOrPassenger" ng-model="driverOrPassenger" ng-value="'passenger'">passenger</label>
-    		  </div>
-			  <button type="submit" class="btn btn-default" ng-click = "register()">Register</button>
-			  <button type="button" class="btn btn-default" ng-click = "switchToLogin()">Back to Login!</button>
+
+	<div ng-controller="MyController">
+		<input type="button" value="PassengerRegistration" ng-click="ShowHide()" ng-model="driverOrPassenger" />
+		<div id="cont1" ng-hide="IsHidden">
+			<form ng-controller="registerController">
+				<p>Passenger Registration Form</p>
+				<input type="text" class="form-control" id="passenger" ng-model="passenger" style="display: none;"/>
+				<div class="form-group">
+					<label for="exampleInputEmail2">Email address</label> 
+					<input type="string" class="form-control" id="exampleInputEmail2" placeholder="Email" ng-model="passengerEmail">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail3">Phone Number</label> 
+					<input type="string" class="form-control" id="exampleInputEmail3" placeholder="phone" ng-model="phone">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Username</label> 
+					<input type="string" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="username">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Password</label> 
+					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password">
+				</div>
+
+				<button type="submit" class="btn btn-default" ng-click="register()">Register</button>
+				<button type="button" class="btn btn-default" ng-click="switchToLogin()">Back to Login!</button>
 			</form>
 		</div>
-	</div>
-</div>
+
+		<div ng-app="MyApp" ng-controller="MyController">
+			<input type="button" value="DriverRegistration" ng-click="ShowHide()" ng-model="driverOrPassenger" />
+			<div id="cont2" ng-hide="IsHidden">
+				<form ng-controller="registerController">
+					<p>Driver Registration Form</p>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label> 
+						<input type="string" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="email">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Phone Number</label> 
+						<input type="string" class="form-control" id="exampleInputEmail1" placeholder="Phone" ng-model="Phone">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">License Number</label> 
+						<input type="string" class="form-control" id="exampleInputEmail1" placeholder="licensenumber" ng-model="licensenumber">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Username</label> 
+						<input type="string" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="username">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label> 
+						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password">
+					</div>
+
+					<button type="submit" class="btn btn-default" ng-click="register()">Register</button>
+					<button type="button" class="btn btn-default" ng-click="switchToLogin()">Back to Login!</button>
+				</form>
+			</div>
 </body>
 </html>

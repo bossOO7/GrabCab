@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="routerApp">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Request Received</h1>
+<div class="container-fluid" ng-controller="Ctrl1" >
+	<div class = "row" id="case1" ng-hide="true" >
+		<div class = "col-md-4">
+		<h1> Driver Details: </h1>
+		<h3>RideID: </h3><p> {{RideID}} </p>
+		<h3>Driver Name: </h3><p> {{driverName}} </p>
+		<h3>Driver's Phone Number: </h3><p> {{driverPhoneNumber}} </p>
+		<h3>Car Type:</h3><p> {{carType}} </p>
+		
+			<form>
+			  <button type="submit" class="btn btn-default" ng-click = "Cancel()">Cancel Ride</button>
+			</form>
+		</div>
+	</div>
+	
+	<div class ="row" id="case2" >
+	<p> In Progress....... </p>
+	</div>
+</div>
+
+
+</body>
+</html>

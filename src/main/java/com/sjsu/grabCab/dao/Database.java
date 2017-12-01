@@ -18,7 +18,7 @@ public class Database {
 	public List<Map<String, Object>> executeQuery(String sql) throws SQLException {
         System.out.println("Executing SQL query: " + sql);
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cmpe226","grabCab","grabCab");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://cmpe226grabcab.cdxflcl8qqin.us-west-1.rds.amazonaws.com:3306/cmpe226","grabCab","cmpe226grabcab");
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -48,7 +48,7 @@ public class Database {
 		System.out.println("Executing SQL query: " + sql);
 
         Statement statement = null;
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cmpe226","grabCab","grabCab");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://cmpe226grabcab.cdxflcl8qqin.us-west-1.rds.amazonaws.com:3306/cmpe226","grabCab","cmpe226grabcab");
         try {
 			statement = connection.createStatement();
 
