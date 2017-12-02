@@ -27,15 +27,15 @@
         <td>{{cartype}}</td>
         <td>{{cardnumber}}</td>
 <tr ng-repeat="ride in data">
-        <td>RideId:{{rideid}}</td>
-        <td>DriverName:{{username}}</td>
-        <td>Pickup:{{pickuplocation}}</td>
-        <td>StartedAt:{{starttime}}</td>
-        <td>DropOff:{{dropofflocation}}</td>
-        <td>EndedAt:{{endtime}}</td>
-        <td>Cost:{{cost}}</td>
-        <td>CarType:{{cartype}}</td>
-        <td>CardNumber:{{cardnumber}}</td>
+        <td>RideId:{{ride.rideid}}</td>
+        <td>DriverName:{{ride.username}}</td>
+        <td>Pickup:{{ride.pickuplocation}}</td>
+        <td>StartedAt:{{ride.starttime}}</td>
+        <td>DropOff:{{ride.dropofflocation}}</td>
+        <td>EndedAt:{{ride.endtime}}</td>
+        <td>Cost:{{ride.cost}}</td>
+        <td>CarType:{{ride.cartype}}</td>
+        <td>CardNumber:{{ride.cardnumber}}</td>
 </tr>
 </table>
     
