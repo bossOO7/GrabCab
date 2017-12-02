@@ -19,6 +19,30 @@ public class Passenger implements UserDetails{
 	
 	private String phone;
 
+	
+	private String passengerClass;
+	
+	private String promoCode;
+	
+
+
+	public String getEmail() {
+		return email;
+	}
+
+	
+	
+	public Passenger(String username, String password, String email, String phone, String passengerClass,
+			String promoCode) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.passengerClass = passengerClass;
+		this.promoCode = promoCode;
+	}
+
 	public String getPhone() {
 		return phone;
 	}
@@ -27,8 +51,20 @@ public class Passenger implements UserDetails{
 		this.phone = phone;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getPassengerClass() {
+		return passengerClass;
+	}
+
+	public void setPassengerClass(String passengerClass) {
+		this.passengerClass = passengerClass;
+	}
+
+	public String getPromoCode() {
+		return promoCode;
+	}
+
+	public void setPromoCode(String promoCode) {
+		this.promoCode = promoCode;
 	}
 
 	public void setEmail(String email) {
@@ -56,13 +92,6 @@ public class Passenger implements UserDetails{
 	}
 
 
-	public Passenger(String username, String password, String email, String phone) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.phone = phone;
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

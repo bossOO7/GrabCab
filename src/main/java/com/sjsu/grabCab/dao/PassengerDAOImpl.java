@@ -60,7 +60,9 @@ public class PassengerDAOImpl implements PassengerDAO {
 		if(rows.size()==0){
 			//throw new Exception("No user found with that username");
 		}
-		Passenger p = new Passenger((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"),(String) rows.get(0).get("phone"));
+
+		Passenger p = new Passenger((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"), (String) rows.get(0).get("phone"), (String) rows.get(0).get("promoCode"), (String) rows.get(0).get("pssengerClass"));
+
 		return (UserDetails) p;
 	}
 
@@ -82,7 +84,9 @@ public class PassengerDAOImpl implements PassengerDAO {
 			return null;
 		}
 		else{
-			Passenger p = new Passenger((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"),(String) rows.get(0).get("phone"));
+
+			Passenger p = new Passenger((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"), (String) rows.get(0).get("phone"),(String) rows.get(0).get("passengerclass"),(String) rows.get(0).get("promocode"));
+
 			return p;
 		}
 	}

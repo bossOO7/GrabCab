@@ -1,6 +1,7 @@
 package com.sjsu.grabCab.dao;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.sjsu.grabCab.entity.Driver;
+import com.sjsu.grabCab.entity.Ride;
 
 @Repository
 public class DriverDAOImpl implements DriverDAO{
@@ -21,10 +23,11 @@ public class DriverDAOImpl implements DriverDAO{
 	private PrepareQuery prepareQuery;
 	
 	@Override
-	public boolean addUser(String username, String password, String email) {
+	public boolean addUser(String licensenumber,String username, String password, String email,String phone) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String p = passwordEncoder.encode(password);
-		String query = "Insert into Driver(username,password,email) values ( \""+username+"\",\""+p+"\",\""+email+"\")";
+		System.out.println(p);
+		String query = "Insert into Driver(licensenumber,username,password,email,phone) values ( \""+licensenumber+"\",\""+username+"\",\""+p+"\",\""+email+"\",\""+phone+"\")";
 		try {
 			database.executeUpdate(query);
 			return true;
@@ -75,6 +78,28 @@ public class DriverDAOImpl implements DriverDAO{
 		else{
 			Driver d = new Driver((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"));
 			return d;
+		}
+	}
+	
+	@Override
+	public Ride getRides(String username) {
+		prepareQuery.setQuery("select * from Ride where rideStatus = 'R' ");
+		
+		String query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		try{
+			rows = database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		if(rows.size()==0){
+			System.out.println("didn't get any rows back");
+			return null;
+		}
+		else{
+			Ride r = new Ride((Long) rows.get(0).get("rideId"), (Date) rows.get(0).get("startTime"),(Date) rows.get(0).get("endTime"),(String) rows.get(0).get("pickUpLocation"),(String) rows.get(0).get("dropOffLocation"),(double) rows.get(0).get("cost"), (String) rows.get(0).get("carType"), (String) rows.get(0).get("reason"), (String) rows.get(0).get("rideStatus"), (String) rows.get(0).get("driverRating"), (String) rows.get(0).get("passengerRating"),(String) rows.get(0).get("licenseNumber"),(String) rows.get(0).get("email"));
+			System.out.println(" Get Ride Results : "+r.getRideStatus()+":"+r.getId());
+			return r;
 		}
 	}
 

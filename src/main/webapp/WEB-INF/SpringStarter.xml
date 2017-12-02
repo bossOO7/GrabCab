@@ -28,9 +28,9 @@
 	<!-- Step 6: Setup DataSource/ ConnectionPool -->
 	<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/cmpe226?useSSL=false" />
+		<property name="url" value="jdbc:mysql://cmpe226grabcab.cdxflcl8qqin.us-west-1.rds.amazonaws.com:3306/cmpe226" />
 		<property name="username" value="grabCab" />
-		<property name="password" value="grabCab" />
+		<property name="password" value="cmpe226grabcab" />
 	</bean>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>

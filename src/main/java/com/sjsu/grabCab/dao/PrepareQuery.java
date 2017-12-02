@@ -36,5 +36,14 @@ public class PrepareQuery {
 		String part2 = query.substring(index+1);
 		query = part1+data+part2;
 	}
+	void substitue(long data){
+		int index = query.indexOf('?');
+		if(index == -1){
+			System.out.println("Exception");
+		}
+		String part1 = query.substring(0, index);
+		String part2 = query.substring(index+1);
+		query = part1+data+part2;
+	}
 	
 }

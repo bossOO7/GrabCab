@@ -12,15 +12,36 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 public class Driver implements UserDetails{
 
-	@Id
-	@Column(name="username")
+	
+	private String licenseNumber;
+	
+	
 	private String username;
 	
-	@Column(name="password")
+	
 	private String password;
 	
-	@Column(name="email")
+	
 	private String email;
+	
+
+	public String getLicensenumber() {
+		return licenseNumber;
+	}
+
+	public void setLicensenumber(String licenseNumber) {
+		this.licenseNumber = licenseNumber;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	private String phone;
 	
 	public Driver(String username, String password, String email) {
 		this.username = username;
