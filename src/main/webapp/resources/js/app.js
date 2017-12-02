@@ -591,7 +591,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	   }
      }])
      
- //Swati: Controller for passenger history get and going back to passenger homepage    
+ //Swati: Controller for passenger history get and going back to passenger homepage   : updated history scope variable 
      
   routerApp.controller('historyController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
 
