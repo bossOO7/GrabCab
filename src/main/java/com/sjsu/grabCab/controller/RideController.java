@@ -25,12 +25,20 @@ public class RideController {
 		
 	}
 	
-	@RequestMapping(value="/ride", method = RequestMethod.POST)
-	public ResponseEntity requestforRide(@RequestParam("rideId") Long rideId, @RequestParam("pickUpLocation") String pickUpLocation, @RequestParam("dropOffLocation") String dropOffLocation, @RequestParam("carType") String carType){
+//	@RequestMapping(value="/ride", method = RequestMethod.POST)
+//	public ResponseEntity requestforRide(@RequestParam("rideId") Long rideId, @RequestParam("pickUpLocation") String pickUpLocation, @RequestParam("dropOffLocation") String dropOffLocation, @RequestParam("carType") String carType){
+//	
+//		if(rideDAO.requestRide(rideId, pickUpLocation, dropOffLocation, carType))
+//			return ResponseEntity.ok(null);
+//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//		
+//	}
 	
-		if(rideDAO.requestRide(rideId, pickUpLocation, dropOffLocation, carType))
-			return ResponseEntity.ok(null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	@RequestMapping(value="/ride", method = RequestMethod.POST)
+	public ResponseEntity requestforRide2(@RequestParam("pickupLocation") String pickupLocation, @RequestParam("dropOffLocation") String dropOffLocation, @RequestParam("carType") String carType){
+	
+		System.out.println("ride request received");
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
 	}
 	

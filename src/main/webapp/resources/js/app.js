@@ -320,7 +320,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		           console.log(data);
 		    	   if(data.status==200){
 		               console.log(data.token);          
-		    		   $state.transitionTo("requested");
+		    		   $state.transitionTo("app.requested");
 		            }
 		           else{
 		               
@@ -332,44 +332,46 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      }])
      
      
-//polling and presenting driver details   on on progress page in passenger's aplication page  
-     routerApp.controller('Ctrl1', function($scope,$timeout){
-    	 $scope.Status=response.Status;
+//polling and presenting driver details   on on progress page in passenger's aplication page 
+     routerApp.controller('Ctrl1',['$scope','$http','$state','$window','$interval',function($scope,$http,$state,$window,$interval){
+     //routerApp.controller('Ctrl1', function($scope,$timeout){
+    	 //$scope.Status=response.Status;
     	 //$scope.Status='A';
     	 var poll=function(){
-    		 $timeout(function(){
-    	         if($scope.Status== 'R'){
-    	        	 console.log("in progress");
-    			   	poll();
-    	         }
-    	         else if($scope.Status=='A')
-    	        	 {
-    	        	 routerApp.controller('requestController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
-    	        	  	   $scope.requestControl=function(){  
-    	        		  		   $http({
-    	        			           method:'GET',
-    	        			           url:'/grabCab/isRideAccepted',
-    	        			           headers: {"Content-Type":"application/x-www-form-urlencoded"}
-    	        			       }).then(function (response){ 
-    	        			    		   $scope.RideID=response.RideID;
-    	        			        	   $scope.driverName=response.driverName;
-    	        			        	   $scope.driverPhoneNumber=response.driverPhoneNumber;
-    	        			        	   $scope.carType=response.carType;
-    	        			    	   
-    	        			    	  /* $scope.RideID=0123;
-	        			        	   $scope.driverName='xyz';
-	        			        	   $scope.driverPhoneNumber=902345676859;
-	        			        	   $scope.carType='SUV';*/
-    	        			        	   
-    	        			        	   case1.parent().parent().css({'display': 'none'});
-    	        			       })       
-    	        		   }
-    	        	     }])
-    	        	 }}, 1000);
+    		 
+    		 $interval(function(){
+    			 $http({
+			           method:'GET',
+			           url:'/grabCab/isRideAccepted',
+			           headers: {"Content-Type":"application/x-www-form-urlencoded"}
+			       }).then(function (response){ 
+			        	   if(response.Status== 'R'){
+			    	        	 console.log("in progress");
+			    			   	poll();
+			        	   }
+			    	       else if(response.Status=='A')
+			    	       { 
+				    		   $scope.RideID=response.RideID;
+				        	   $scope.driverName=response.driverName;
+				        	   $scope.driverPhoneNumber=response.driverPhoneNumber;
+				        	   $scope.carType=response.carType; 		          
+				        	   return;
+			    	       }
+			        });
+			    	   
+			    	  /* $scope.RideID=0123;
+		        	   $scope.driverName='xyz';
+		        	   $scope.driverPhoneNumber=902345676859;
+		        	   $scope.carType='SUV';*/
+			        	   
+			        	   //case1.parent().parent().css({'display': 'none'});
+			       },1000);
+    		
+
     	    };     
     	   poll();
-    	 
-     })
+     
+     }])
          
  //Ride Cancellation  by passenger
      routerApp.controller('requestController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
@@ -394,7 +396,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		           console.log(data);
 		    	   if(data.status==200){
 		               console.log(data.token);          
-		    		   $state.transitionTo("passengerHome");
+		    		   $state.transitionTo("app.passengerHome");
 		            }
 		           else{
 		               
