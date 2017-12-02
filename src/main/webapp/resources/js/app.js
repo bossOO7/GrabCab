@@ -571,7 +571,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{//confirm raghu if we can do addition like this
-		        	   cost:$scope.tip+response.cost,
+		        	   tip:$scope.tip,
 		        	   driverrating:$scope.driverrating
 		        	   
 		           }

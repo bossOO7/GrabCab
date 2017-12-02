@@ -5,16 +5,27 @@
 <body>
 <h1> <center>Passenger History</center></h1>
     <table>
+    <tr>
+        <td>RideId</td>
+        <td>DriverName</td>
+        <td>Pickup</td>
+        <td>StartedAt</td>
+        <td>DropOff</td>
+        <td>EndedAt</td>
+        <td>Cost</td>
+        <td>CarType</td>
+        <td>CardNumber</td>
+     </tr>
 <tr ng-repeat="ride in data">
-        <td>RideId:{{rideid}}</td>
-        <td>DriverName:{{username}}</td>
-        <td>Pickup:{{pickuplocation}}</td>
-        <td>StartedAt:{{starttime}}</td>
-        <td>DropOff:{{dropofflocation}}</td>
-        <td>EndedAt:{{endtime}}</td>
-        <td>Cost:{{cost}}</td>
-        <td>CarType:{{cartype}}</td>
-        <td>CardNumber:{{cardnumber}}</td>
+        <td>{{rideid}}</td>
+        <td>{{username}}</td>
+        <td>{{pickuplocation}}</td>
+        <td>{{starttime}}</td>
+        <td>{{dropofflocation}}</td>
+        <td>{{endtime}}</td>
+        <td>{{cost}}</td>
+        <td>{{cartype}}</td>
+        <td>{{cardnumber}}</td>
 </tr>
 </table>
     
