@@ -4,12 +4,15 @@
 </head>
 </head>
 <body>
-
+<div class="container-fluid">
+	<div class = "row">
+		<div class = "col-md-4">
 	<div ng-controller="MyController">
-		<input type="button" value="PassengerRegistration" ng-click="ShowHide()" ng-model="driverOrPassenger" />
+	<h2> Passenger's Register Here!!</h2>
+		<input type="button" value="PassengerRegistration" ng-click="ShowHide()" ng-model="driverOrPassenger" /><br><br>
 		<div id="cont1" ng-hide="IsHidden">
 			<form ng-controller="registerController">
-				<p>Passenger Registration Form</p>
+			<center>	<h2>Passenger Registration Form</h2>  </center><br>
 				<input type="text" class="form-control" id="passenger" ng-model="passenger" style="display: none;"/>
 				<div class="form-group">
 					<label for="exampleInputEmail2">Email address</label> 
@@ -34,10 +37,11 @@
 		</div>
 
 		<div ng-app="MyApp" ng-controller="MyController">
-			<input type="button" value="DriverRegistration" ng-click="ShowHide()" ng-model="driverOrPassenger" />
+		<h2> Driver's Register Here!!</h2>
+			<input type="button" value="DriverRegistration" ng-click="ShowHide()" ng-model="driverOrPassenger" /><br><br>
 			<div id="cont2" ng-hide="IsHidden">
 				<form ng-controller="registerController">
-					<p>Driver Registration Form</p>
+					<center>	<h2>Driver Registration Form</h2>  </center><br>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email address</label> 
 						<input type="string" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="email">
@@ -63,5 +67,9 @@
 					<button type="button" class="btn btn-default" ng-click="switchToLogin()">Back to Login!</button>
 				</form>
 			</div>
+			
+				</div>
+	</div>
+</div>
 </body>
 </html>

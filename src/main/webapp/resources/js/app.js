@@ -4,8 +4,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-//////////////States
-    // route for the home page
+//States start here-----------------------------------------------------------------
         .state('app', {
             url: '/',
             views: {
@@ -19,6 +18,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 
             }
         })
+        
+//-------------------------------------------------------------------------------       
         .state('app.register',{
         	url: 'register',
         	views: {
@@ -31,6 +32,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         })
+  //--------------------------------------------------------------------------      
+        
         .state('app.home',{
         	url: 'mainTest',
         	views: {
@@ -43,7 +46,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         })
-        
+ //--------------------------------------------------------------------------------       
         .state('app.passengerHome',{
         	url: 'passengerHome',
         	views: {
@@ -56,7 +59,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         }) 
-        
+//-----------------------------------------------------------------------------------        
         .state('app.requested',{
         	url: 'requested',
         	views: {
@@ -69,7 +72,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         }) 
-       
+//----------------------------------------------------------------------------------------      
          .state('app.passengerHistory',{
         	url: 'passengerHistory',
         	views: {
@@ -77,12 +80,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         			templateUrl: 'resources/html/header.html'
         		},
         		'content@':{
-        			templateUrl: 'resources/html/passenger/passengerRequestinprogress.html',
-        			controller: 'Ctrl1'
+        			templateUrl: 'resources/html/passenger/history.html',
+        			controller: 'historyController'
         		}
         	}
         }) 
-        
+ //--------------------------------------------------------------------------------------------       
            .state('app.driver',{
         	url: 'driver',
         	views: {
@@ -95,7 +98,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         })
-        
+//----------------------------------------------------------------------------------------------        
         .state('app.rideStatus',{
         	url: 'rideStatus',
         	views: {
@@ -108,7 +111,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         })
-        
+//---------------------------------------------------------------------------------------------------        
         .state('app.rating',{
         	url: 'rating',
         	views: {
@@ -121,14 +124,27 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         })
+//-----------------------------------------------------------------------------------------------------        
+        .state('app.passengerRating',{
+        	url: 'rating',
+        	views: {
+        		'header@':{
+        			templateUrl: 'resources/html/header.html'
+        		},
+        		'content@':{
+        			templateUrl: 'resources/html/driver/passengerRating.html',
+        			controller: 'dRatingController'
+        		}
+        	}
+        })
                
         
 });
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///Controllers
+//States end here----------------------------------------------------------------------------------------------
+///Controllers Start here--------------------------------------------------------------------------------------
 
-//Login Functionality
+//Raghu:Login Functionality
      routerApp.controller('loginController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
 	   $scope.login=function(){
 		   if($scope.driverOrPassenger=="driver"){
@@ -195,7 +211,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	   }
      }])
      
-//Home Redirection     
+//Raghu:Home Redirection----------------------------------------------------------------------------------------------    
      
        routerApp.controller('homeController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
     	   $http({
@@ -208,7 +224,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     	   });
      }])
      
- //Autohide and show driver and passenger form
+ //Swati:Autohide and show driver and passenger form------------------------------------------------------------------
      routerApp.controller('MyController', function ($scope) {
          //This will hide the DIV by default.
          $scope.IsHidden = true;
@@ -218,7 +234,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
          }
      });
      
-//Registration Functionality     
+//Swati:Registration Functionality------------------------------------------------------------------------------------
      routerApp.controller('registerController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.register=function(){
 	       console.log($scope.passengerEmail);
@@ -296,7 +312,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
   	   }
      }])
 
-//Requesting ride from passenger home     
+//Swati:Requesting ride from passenger home -------------------------------------------------------------------------   
      routerApp.controller('rideController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.request=function(){  
 	  		   $http({
@@ -329,14 +345,41 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       })
 	       
 	   }
+  	  //Swati:History of Passenger -----------------------------------------------------------------------
+  	 $scope.history=function(){  
+		   $http({
+	           method:'post',
+	           url:'/grabCab/ride',
+	           headers: {"Content-Type":"application/x-www-form-urlencoded"},
+	           transformRequest: function(obj) {
+	               var str = [];
+	               for(var p in obj)
+	               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	               return str.join("&");
+	           },
+	           data:{
+	        	   
+	           }
+	
+	       }).then(function(data){
+	           console.log(data);
+	    	   if(data.status==200){
+	               console.log(data.token);          
+	    		   $state.transitionTo("app.passengerHistory");
+	            }
+	           else{
+	               
+	
+	           }
+	       })
+     
+ }
+  	   
      }])
      
      
-//polling and presenting driver details   on on progress page in passenger's aplication page 
+//Swati:polling and presenting driver details   on on progress page in passenger's application page ----------------------
      routerApp.controller('Ctrl1',['$scope','$http','$state','$window','$interval',function($scope,$http,$state,$window,$interval){
-     //routerApp.controller('Ctrl1', function($scope,$timeout){
-    	 //$scope.Status=response.Status;
-    	 //$scope.Status='A';
     	 var poll=function(){
     		 
     		 $interval(function(){
@@ -345,11 +388,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 			           url:'/grabCab/isRideAccepted',
 			           headers: {"Content-Type":"application/x-www-form-urlencoded"}
 			       }).then(function (response){ 
-			        	   if(response.Status== 'R'){
+			        	   if(response.rideStatus== 'R'){
 			    	        	 console.log("in progress");
 			    			   	poll();
 			        	   }
-			    	       else if(response.Status=='A')
+			    	       else if(response.rideStatus=='A')
 			    	       { 
 				    		   $scope.RideID=response.RideID;
 				        	   $scope.driverName=response.driverName;
@@ -357,12 +400,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 				        	   $scope.carType=response.carType; 		          
 				        	   return;
 			    	       }
+			    	       else if(response.rideStatus=='C'){
+			    	    	   $state.transitionTo("app.passengerRating");
+			    	       }
 			        });
-			    	   
-			    	  /* $scope.RideID=0123;
-		        	   $scope.driverName='xyz';
-		        	   $scope.driverPhoneNumber=902345676859;
-		        	   $scope.carType='SUV';*/
 			        	   
 			        	   //case1.parent().parent().css({'display': 'none'});
 			       },1000);
@@ -373,7 +414,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      
      }])
          
- //Ride Cancellation  by passenger
+ //Swati:Ride Cancellation  by passenger------------------------------------------------------------------------------
      routerApp.controller('requestController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.Cancel=function(){  
 	  		   $http({
@@ -387,9 +428,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-		        	   RideID:$scope.RideID,
+
 		        	   Reason:$scope.Reason,
-		        	   Status:'C'
+		        	   rideStatus:'C'
 		           }
 		
 		       }).then(function(data){
@@ -407,7 +448,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	   }
      }])
      
- //Driver Homepage    
+ //Kanika:Driver Homepage-------------------------------------------------------------------------------------------
     routerApp.controller('getRidesController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
     	   	$http({
              method:'get',
@@ -434,7 +475,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     	        
      }])
      
-     
+     //Kanika: getting all rides in a radio and accepting one----------------------------------------------------------
      routerApp.controller('getRidesController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.accept=function(){  
 	  		   $http({
@@ -449,7 +490,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		           },
 		           data:{
 		        	   RideId:$scope.RideId,
-		        	   rideStatus:'Accepted'
+		        	   rideStatus:'A'
 		           }
 		
 		       }).then(function(data){
@@ -468,42 +509,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      }])
      
      
- //    Passenger History--- not done yet on frontend and need to decide what to print
-   /*    routerApp.controller('rideController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
-  	   $scope.history=function(){  
-	  		   $http({
-		           method:'post',
-		           url:'/grabCab/ride',
-		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
-		           transformRequest: function(obj) {
-		               var str = [];
-		               for(var p in obj)
-		               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-		               return str.join("&");
-		           },
-		           data:{
-		        	   
-		           }
-		
-		       }).then(function(data){
-		     //  }).then(function(){
-		           console.log(data);
-		    	   if(data.status==200){
-		               console.log(data.token);          
-		    		   $state.transitionTo("passengerHistory");
-		            }
-		           else{
-		               
-		
-		           }
-		       })
-	       
-	   }
-     }])
-     
-     
-     */
-     //
+ //Kanika:Driver Ride Status Information---------------------------------------------------------------------------------
      
       routerApp.controller('rideStatusController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.endRide=function(){  
@@ -538,7 +544,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      }])
      
      //
-     
+  //Kanika:Rating a passenger  ------------------------------------------------------------------------------------------------
       routerApp.controller('passengerRatingController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.rate=function(){  
 	  		   $http({
@@ -569,3 +575,38 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       })
 	   }
      }])
+     //Swati:Rating Driver---------------------------------------------------------------------------------------------
+      routerApp.controller('dRatingController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
+  	   $scope.rate=function(){  
+	  		   $http({
+		           method:'PUT',
+		           url:'/grabCab/ride',
+		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
+		           transformRequest: function(obj) {
+		               var str = [];
+		               for(var p in obj)
+		               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		               return str.join("&");
+		           },
+		           data:{
+		        	   
+		        	   driverrating:$scope.driverrating
+		           }
+		
+		       }).then(function(data){
+		           console.log(data);
+		    	   if(data.status==200){
+		               console.log(data.token);  
+		               console.log("Driver successfully rated");
+		    		   $state.transitionTo("app.passengerHome");
+		            }
+		           else{
+		               
+		
+		           }
+		       })
+	   }
+     }])
+     
+     
+     //Controllers end here---------------------------------------------------------------------------------------------------

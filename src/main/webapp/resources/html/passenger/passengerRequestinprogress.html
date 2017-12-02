@@ -6,17 +6,25 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Request Received</h1>
-<div class="container-fluid" ng-controller="Ctrl1" >
-	<div class = "row" id="case1" ng-hide="true" >
+<div class="container-fluid">
+	<div class = "row">
 		<div class = "col-md-4">
-		<h1> Driver Details: </h1>
+		<center>
+<h2>Ride Request Received</h2>
+<h3>Thanks for booking with us!!!</h3></center>
+<div class="container-fluid" ng-controller="Ctrl1" >
+	<div class = "row" id="case1"  >
+		<div class = "col-md-4">
+		<h3> Below are Driver Details: </h3>
 		<h3>RideID: </h3><p> {{RideID}} </p>
 		<h3>Driver Name: </h3><p> {{driverName}} </p>
 		<h3>Driver's Phone Number: </h3><p> {{driverPhoneNumber}} </p>
 		<h3>Car Type:</h3><p> {{carType}} </p>
 		
 			<form>
+			<h3>Cancel your Ride!!!</h3>
+			<label for="cancellationReason">Reason</label> 
+					<input type="string" class="form-control" id="cancellationReason" placeholder="reason" ng-model="reason">
 			  <button type="submit" class="btn btn-default" ng-click = "Cancel()">Cancel Ride</button>
 			</form>
 		</div>
@@ -27,6 +35,8 @@
 	</div>
 </div>
 
-
+	</div>
+	</div>
+</div>
 </body>
 </html>
