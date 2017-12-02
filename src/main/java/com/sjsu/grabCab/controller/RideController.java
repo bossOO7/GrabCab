@@ -35,10 +35,12 @@ public class RideController {
 //	}
 	
 	@RequestMapping(value="/ride", method = RequestMethod.POST)
-	public ResponseEntity requestforRide2(@RequestParam("pickupLocation") String pickupLocation, @RequestParam("dropOffLocation") String dropOffLocation, @RequestParam("carType") String carType){
+	public ResponseEntity requestforRide(@RequestParam("pickupLocation") String pickupLocation, @RequestParam("dropOffLocation") String dropOffLocation, @RequestParam("carType") String carType){
 	
 		System.out.println("ride request received");
 		return ResponseEntity.status(HttpStatus.OK).body(null);
+		
+
 		
 	}
 	

@@ -1,15 +1,21 @@
 <html ng-app="routerApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Status of the </title>
+<title> </title>
 </head>
 <body><center>
+<h1>Thanks for Riding with Us!!</h1>
+<div class="form-group">
+					<label for="tip">Tip your Driver : $</label> 
+					<input type="number" class="form-control" id="tip" placeholder="tip" ng-model="tip">
+				</div>
 <h1>Rate your Driver </h1>
-</center>
+
 <div class="container-fluid">
 	<div class = "row">
 		<div class = "col-md-4"></div>
 		<div class = "col-md-4">
+		
 		<h3>Rate the ride: </h3>
 			<form>
   <select name="rating">
@@ -22,9 +28,9 @@
   </select>
   <br><br>
 			  <button type="submit" class="btn btn-default" ng-click = "rate()">Rate</button>
-			</form>
+			</form> 
 		</div>
 	</div>
-</div>
+</div></center>
 </body>
 </html>

@@ -255,7 +255,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               email:$scope.email,
 		               phone:$scope.phone,
 		               password:$scope.password,
-		               licensenumber:$scope.licensenumber,
+		               licenseNumber:$scope.licenseNumber,
+		               cardnumber:$scope.cardnumber,
+		               cardname:$scope.cardname,
+		               expirydate:$scope.expirydate,
 		               type:'driver'
 		               
 		       
@@ -291,6 +294,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               email:$scope.passengerEmail,
 		               password:$scope.password,
 		               phone:$scope.phone,
+		               cardnumber:$scope.cardnumber,
+		               cardname:$scope.cardname,
+		               expirydate:$scope.expirydate,
 		               type:'passenger'
 		           }
 		
@@ -345,34 +351,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       })
 	       
 	   }
-  	  //Swati:History of Passenger -----------------------------------------------------------------------
-  	 $scope.history=function(){  
-		   $http({
-	           method:'post',
-	           url:'/grabCab/ride',
-	           headers: {"Content-Type":"application/x-www-form-urlencoded"},
-	           transformRequest: function(obj) {
-	               var str = [];
-	               for(var p in obj)
-	               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-	               return str.join("&");
-	           },
-	           data:{
-	        	   
-	           }
-	
-	       }).then(function(data){
-	           console.log(data);
-	    	   if(data.status==200){
-	               console.log(data.token);          
+  	  //Swati:Redirection to history -----------------------------------------------------------------------
+  	 $scope.history=function(){  	         
 	    		   $state.transitionTo("app.passengerHistory");
-	            }
-	           else{
-	               
-	
-	           }
-	       })
-     
+
  }
   	   
      }])
@@ -448,9 +430,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	   }
      }])
      
- //Kanika:Driver Homepage-------------------------------------------------------------------------------------------
-    routerApp.controller('getRidesController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
-    	   	$http({
+ //Kanika:Driver Homepage-------------------------------------------------------------------------------------------     
+     //Kanika: getting all rides in a radio and accepting one----------------------------------------------------------
+     routerApp.controller('getRidesController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
+    	 //get request for requested rides
+    	 
+    	 $http({
              method:'get',
              url:'/grabCab/driver',
              headers: {"Content-Type":"application/x-www-form-urlencoded"},
@@ -472,11 +457,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     	        }).error(function(error){
 
     	        })
-    	        
-     }])
-     
-     //Kanika: getting all rides in a radio and accepting one----------------------------------------------------------
-     routerApp.controller('getRidesController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
+    	 
+    	 //post request for accepting selected ride
   	   $scope.accept=function(){  
 	  		   $http({
 		           method:'PUT',
@@ -588,9 +570,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 		               return str.join("&");
 		           },
-		           data:{
-		        	   
+		           data:{//confirm raghu if we can do addition like this
+		        	   cost:$scope.tip+response.cost,
 		        	   driverrating:$scope.driverrating
+		        	   
 		           }
 		
 		       }).then(function(data){
@@ -608,5 +591,50 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	   }
      }])
      
+ //Swati: Controller for passenger history get and going back to passenger homepage    
      
+  routerApp.controller('historyController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
+	  //-----------Go Back
+      $scope.GoBack=function(){  
+		   $state.transitionTo("app.passengerHome");
+}
+
+	  
+	  {   $http({
+	           method:'GET',
+	           url:'/grabCab/passenger/history',
+	           headers: {"Content-Type":"application/x-www-form-urlencoded"},
+	           transformRequest: function(obj) {
+	               var str = [];
+	               for(var p in obj)
+	               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	               return str.join("&");
+	           },
+	           data:{
+	        	   rideid:response.rideid,
+	        	   username:response.username, //Drivers username
+	        	   pickuplocation:response.pickuplocation,
+	        	   starttime:response.starttime,
+	        	   dropofflocation:response.dropofflocation,
+	        	   endtime:response.endtime,
+	        	   cost:response.cost,
+	        	   cartype:response.cartype,
+	        	   cardnumber:response.cardnumber
+	        	   
+	           }
+	
+	       }).then(function(data){
+	           console.log(data);
+	    	   if(data.status==200){
+	               console.log(data.token); 
+	               console.log("history data fetched");  
+	            }
+	           else{
+	               
+	
+	           }
+	       }) }
+ 
+     }])
+        
      //Controllers end here---------------------------------------------------------------------------------------------------
