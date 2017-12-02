@@ -467,7 +467,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      
      
  //    Passenger History--- not done yet on frontend and need to decide what to print
-       routerApp.controller('rideController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
+   /*    routerApp.controller('rideController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.history=function(){  
 	  		   $http({
 		           method:'post',
@@ -500,7 +500,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      }])
      
      
-     
+     */
      //
      
       routerApp.controller('rideStatusController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
