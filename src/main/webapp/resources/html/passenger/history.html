@@ -3,6 +3,7 @@
     <title></title>
 </head>
 <body>
+
 <h1> <center>Passenger History</center></h1>
     <table>
     <tr>
@@ -17,25 +18,16 @@
         <td>CardNumber</td>
      </tr>
 <tr ng-repeat="ride in data">
-        <td>{{rideid}}</td>
-        <td>{{username}}</td>
-        <td>{{pickuplocation}}</td>
-        <td>{{starttime}}</td>
-        <td>{{dropofflocation}}</td>
-        <td>{{endtime}}</td>
-        <td>{{cost}}</td>
-        <td>{{cartype}}</td>
-        <td>{{cardnumber}}</td>
-<tr ng-repeat="ride in data">
-        <td>RideId:{{rideid}}</td>
-        <td>DriverName:{{username}}</td>
-        <td>Pickup:{{pickuplocation}}</td>
-        <td>StartedAt:{{starttime}}</td>
-        <td>DropOff:{{dropofflocation}}</td>
-        <td>EndedAt:{{endtime}}</td>
-        <td>Cost:{{cost}}</td>
-        <td>CarType:{{cartype}}</td>
-        <td>CardNumber:{{cardnumber}}</td>
+        <td>{{ride.rideid}}</td>
+        <td>{{ride.username}}</td>
+        <td>{{ride.pickuplocation}}</td>
+        <td>{{ride.starttime}}</td>
+        <td>{{ride.dropofflocation}}</td>
+        <td>{{ride.endtime}}</td>
+        <td>{{ride.cost}}</td>
+        <td>{{ride.cartype}}</td>
+        <td>{{ride.cardnumber}}</td>
+
 </tr>
 </table>
     
