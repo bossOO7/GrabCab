@@ -1,13 +1,17 @@
 <html ng-app="routerApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Accept Ride</title>
+<title> Accept</title>
 </head>
 <body>
+<h1><center>1. Accept a Ride</center></h1>
 <table>
 <tr ng-repeat="ride in data">
         <td>{{ride.rideID}}</td>
+        <td>{{ride.username}}</td>
+        <td>{{ride.UserRating}}</td>
         <td>{{ride.ride_pickupLocation}}</td>
+        
         <td>
       <input type="radio" name="accept" value="yes">
     </td>
@@ -17,5 +21,9 @@
 	<h1>Accept the selected ride</h1>
 	<button type="button" class="btn btn-default" ng-click = "accept()">Accept</button>
 </div>
+<h1><center>2. Check History</center></h1>
+			<form>
+			 <button type="submit" class="btn btn-default" ng-click = "historyDriver()">Check History</button>
+			</form>
 </body>
 </html>

@@ -1,0 +1,38 @@
+<html ng-app='routerApp'>
+<head>
+    <title></title>
+</head>
+<body>
+<h1> <center>Passenger History</center></h1>
+     <table>
+    <tr>
+        <td>RideId</td>
+        <td>DriverName</td>
+        <td>Pickup</td>
+        <td>StartedAt</td>
+        <td>DropOff</td>
+        <td>EndedAt</td>
+        <td>Cost</td>
+        <td>UserRating</td>
+     </tr>
+<tr ng-repeat="ride in data">
+        <td>{{ride.rideid}}</td>
+        <td>{{ride.username}}</td>
+        <td>{{ride.pickuplocation}}</td>
+        <td>{{ride.starttime}}</td>
+        <td>{{ride.dropofflocation}}</td>
+        <td>{{ride.endtime}}</td>
+        <td>{{ride.cost}}</td>
+        <td>{{ride.UserRating}}</td>
+        
+
+</tr>
+</table>
+    
+    <form>
+			<h3></h3>
+					
+			  <button type="submit" class="btn btn-default" ng-click = "GoBack_1()">Go Back</button>
+			</form>
+</body>
+</html>

@@ -137,6 +137,20 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         })
+        
+//------------------------------------------------------------------------------------------------------
+        .state('app.historyDriver',{
+        	url: 'driverHistory',
+        	views: {
+        		'header@':{
+        			templateUrl: 'resources/html/header.html'
+        		},
+        		'content@':{
+        			templateUrl: 'resources/html/driver/historyDriver.html',
+        			controller: 'historyDriverController'
+        		}
+        	}
+        })
                
         
 });
@@ -447,7 +461,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
          }).success(function(data){
              if(data.statusCode==200){
              $scope.rideID=data.rideID;
-        	 $scope.pickupLocation=data.ride_ID;
+             $scope.username=data.username;
+        	 $scope.UserRating=data.UserRating;
+        	 $scope.ride_pickupLocation=data.ride_pickupLocation;
              }
     	       
     	            else{
@@ -488,6 +504,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       })
 	       
 	   }
+ //Redirecting to driver history page	 
+    	 $scope.historyDriver=function(){  	         
+  		   $state.transitionTo("app.historyDriver");
+
+  }
      }])
      
      
@@ -507,7 +528,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		           },
 		           data:{
 		        	   RideId:$scope.RideId,
-		        	   rideStatus:'Ended'
+		        	   rideStatus:'C'
 		           }
 		
 		       }).then(function(data){
@@ -594,47 +615,82 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
  //Swati: Controller for passenger history get and going back to passenger homepage    
      
   routerApp.controller('historyController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
-	  //-----------Go Back
-      $scope.GoBack=function(){  
-		   $state.transitionTo("app.passengerHome");
-}
 
-	  
-	  {   $http({
+	  	$http({
 	           method:'GET',
 	           url:'/grabCab/passenger/history',
 	           headers: {"Content-Type":"application/x-www-form-urlencoded"},
-	           transformRequest: function(obj) {
-	               var str = [];
-	               for(var p in obj)
-	               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-	               return str.join("&");
-	           },
+	      
 	           data:{
-	        	   rideid:response.rideid,
-	        	   username:response.username, //Drivers username
-	        	   pickuplocation:response.pickuplocation,
-	        	   starttime:response.starttime,
-	        	   dropofflocation:response.dropofflocation,
-	        	   endtime:response.endtime,
-	        	   cost:response.cost,
-	        	   cartype:response.cartype,
-	        	   cardnumber:response.cardnumber
+	        	 
 	        	   
 	           }
 	
-	       }).then(function(data){
-	           console.log(data);
+	       }).success(function(data){
 	    	   if(data.status==200){
-	               console.log(data.token); 
-	               console.log("history data fetched");  
+	               $scope.rideid=data.rideid;
+	               $scope.username=response.username; 
+	               $scope.pickuplocation=response.pickuplocation;
+	               $scope.starttime=response.starttime;
+	               $scope.dropofflocation=response.dropofflocation;
+	               $scope.endtime=response.endtime;
+	               $scope.cost=response.cost;
+	               $scope.cartype=response.cartype;
+	               $scope.cardnumber=response.cardnumber;
+	                
 	            }
 	           else{
 	               
 	
 	           }
-	       }) }
- 
+	       }).error(function(error){
+	    	   
+	       }) 
+	     
+	 	  //-----------Go Back
+	       $scope.GoBack=function(){  
+	 		   $state.transitionTo("app.passengerHome");
+	  	}
      }])
+     
+      //Kanika: Controller for driver history get and going back to driver homepage    
+     
+  routerApp.controller('historyDriverController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
+	  $http({
+          method:'GET',
+          url:'/grabCab/driver/historyDriver',
+          headers: {"Content-Type":"application/x-www-form-urlencoded"},
+     
+          data:{
+       	 
+       	   
+          }
+
+      }).success(function(data){
+   	   if(data.status==200){
+              $scope.rideid=data.rideid;
+              $scope.username=response.username; 
+              $scope.pickuplocation=response.pickuplocation;
+              $scope.starttime=response.starttime;
+              $scope.dropofflocation=response.dropofflocation;
+              $scope.endtime=response.endtime;
+              $scope.cost=response.cost;
+              $scope.UserRating=response.UserRating;
+               
+           }
+          else{
+              
+
+          }
+      }).error(function(error){
+   	   
+      }) 
+    
+	  //-----------Go Back
+      $scope.GoBack_1=function(){  
+		   $state.transitionTo("app.driver");
+ 	}
+}])
+
         
      //Controllers end here---------------------------------------------------------------------------------------------------
