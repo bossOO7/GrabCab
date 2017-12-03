@@ -376,7 +376,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 			        	   }
 			    	       else if(response.rideStatus=='A')
 			    	       { 
-				    		   $scope.RideID=response.RideID;
+				    		   $scope.RideID=response.rideId;
 				        	   $scope.driverName=response.driverName;
 				        	   $scope.driverPhoneNumber=response.driverPhoneNumber;
 				        	   $scope.carType=response.carType; 		          
@@ -393,12 +393,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 
     	    };     
     	   poll();
-     
-     }])
-         
- //Swati:Ride Cancellation  by passenger------------------------------------------------------------------------------
-     routerApp.controller('requestController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
-  	   $scope.Cancel=function(){  
+    	   
+    	 //Swati:Ride Cancellation  by passenger------------------------------------------------------------------------------
+    	   $scope.Cancel=function(){  
 	  		   $http({
 		           method:'PUT',
 		           url:'/grabCab/ride',
@@ -410,7 +407,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-
+                       rideid:response.rideId,
 		        	   Reason:$scope.Reason,
 		        	   rideStatus:'C'
 		           }
@@ -418,7 +415,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       }).then(function(data){
 		           console.log(data);
 		    	   if(data.status==200){
-		               console.log(data.token);          
+		               console.log(data.token);  
+		               
 		    		   $state.transitionTo("app.passengerHome");
 		            }
 		           else{
@@ -429,7 +427,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	       
 	   }
      }])
-     
+         
+ 
  //Kanika:Driver Homepage-------------------------------------------------------------------------------------------     
      //Kanika: getting all rides in a radio and accepting one----------------------------------------------------------
      routerApp.controller('getRidesController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
