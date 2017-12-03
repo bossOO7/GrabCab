@@ -82,13 +82,14 @@ public class DriverDAOImpl implements DriverDAO{
 	}
 	
 	@Override
-	public Ride getRides(String username) {
-		prepareQuery.setQuery("select * from Ride where rideStatus = 'R' ");
+	public List<Map<String, Object>> getRides() {
+		prepareQuery.setQuery("select * from Ride where ridestatus = 'R' ");
 		
 		String query = prepareQuery.getQuery();
 		List<Map<String, Object>> rows = null;
 		try{
 			rows = database.executeQuery(query);
+			System.out.println("printing rows from db "+rows);
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
@@ -97,9 +98,11 @@ public class DriverDAOImpl implements DriverDAO{
 			return null;
 		}
 		else{
-			Ride r = new Ride((Long) rows.get(0).get("rideId"), (Date) rows.get(0).get("startTime"),(Date) rows.get(0).get("endTime"),(String) rows.get(0).get("pickUpLocation"),(String) rows.get(0).get("dropOffLocation"),(double) rows.get(0).get("cost"), (String) rows.get(0).get("carType"), (String) rows.get(0).get("reason"), (String) rows.get(0).get("rideStatus"), (String) rows.get(0).get("driverRating"), (String) rows.get(0).get("passengerRating"),(String) rows.get(0).get("licenseNumber"),(String) rows.get(0).get("email"));
-			System.out.println(" Get Ride Results : "+r.getRideStatus()+":"+r.getId());
-			return r;
+			//Ride r = new Ride((Long) rows.get(0).get("rideId"), (Date) rows.get(0).get("startTime"),(Date) rows.get(0).get("endTime"),(String) rows.get(0).get("pickUpLocation"),(String) rows.get(0).get("dropOffLocation"),(double) rows.get(0).get("cost"), (String) rows.get(0).get("carType"), (String) rows.get(0).get("reason"), (String) rows.get(0).get("rideStatus"), (String) rows.get(0).get("driverRating"), (String) rows.get(0).get("passengerRating"),(String) rows.get(0).get("licenseNumber"),(String) rows.get(0).get("email"));
+			//Ride r = new Ride((Long) rows.get(0).get("rideId"), (Date) rows.get(0).get("startTime"),(Date) rows.get(0).get("endTime"),(String) rows.get(0).get("pickUpLocation"),(String) rows.get(0).get("dropOffLocation"),(double) rows.get(0).get("cost"), (String) rows.get(0).get("carType"), (String) rows.get(0).get("reason"), (String) rows.get(0).get("rideStatus"), (String) rows.get(0).get("driverRating"), (String) rows.get(0).get("passengerRating"),(String) rows.get(0).get("licenseNumber"),(String) rows.get(0).get("email"));
+			
+			//System.out.println(" Get Ride Results : "+r.getRideStatus()+":"+r.getId());
+			return rows;
 		}
 	}
 

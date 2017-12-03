@@ -1,5 +1,9 @@
 package com.sjsu.grabCab.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +22,7 @@ public class DriverController {
 	DriverDAO driverDAO;
 	
 	@RequestMapping(value="/driver", method = RequestMethod.POST)
-	public ResponseEntity addPassenger(@RequestParam("licenseNumber") String licenseNumber, @RequestParam("email") String email
+	public ResponseEntity addDriver(@RequestParam("licenseNumber") String licenseNumber, @RequestParam("email") String email
 			,@RequestParam("password") String password, @RequestParam("username") String username, @RequestParam("phone") String phone){
 		
 		if(driverDAO.addUser(licenseNumber, username, password, email, phone))
@@ -28,9 +32,12 @@ public class DriverController {
 	}
 	
 	@RequestMapping(value="/driver", method = RequestMethod.GET)
-	public Ride getRides(@RequestParam("rideStatus") String rideStatus){
-		    
-			return  driverDAO.getRides(rideStatus);
+	public ResponseEntity<List> getAllRides(){
+		System.out.println("inside get rides");
+		List<Map<String, Object>> response = driverDAO.getRides();
+		System.out.println("/driver" +response);
+			 
+			 return ResponseEntity.status(HttpStatus.OK).body(response);	 
 		}
 	
 	

@@ -1,19 +1,21 @@
 package com.sjsu.grabCab.dao;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 import java.util.*;
 import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+
 import com.sjsu.grabCab.entity.Passenger;
 import com.sjsu.grabCab.entity.Ride;
+
 
 import java.sql.SQLException;
 
@@ -74,5 +76,35 @@ public class RideDAOImpl implements RideDAO {
 			return true;
 		
 	}
+	
+	public Boolean acceptRide(Long rideId, String rideStatus) {
+		System.out.println("update ride status");
+		String query = "Update Ride SET ridestatus= ? where ridestatus='R' and rideid=? ";
+		prepareQuery.setQuery(query);
+		prepareQuery.substitue(rideStatus);
+		prepareQuery.substitue(rideId);
+		
+		try{
+			database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+			//return false;
+		}
+		return true;
+		
+			//Ride r = new Ride((Long) rows.get(0).get("rideId"), (Date) rows.get(0).get("startTime"),(Date) rows.get(0).get("endTime"),(String) rows.get(0).get("pickUpLocation"),(String) rows.get(0).get("dropOffLocation"),(double) rows.get(0).get("cost"), (String) rows.get(0).get("carType"), (String) rows.get(0).get("reason"), (String) rows.get(0).get("rideStatus"), (String) rows.get(0).get("driverRating"), (String) rows.get(0).get("passengerRating"),(String) rows.get(0).get("licenseNumber"),(String) rows.get(0).get("email"));
+		
+		/*
+		 * UPDATE Ride
+SET rideId='A'
+WHERE rideId='R';
+		 * 
+		 * */
+		
+		//return null;
+	}
+
+	
+	
 
 }

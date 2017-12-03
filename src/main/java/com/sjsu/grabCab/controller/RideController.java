@@ -44,4 +44,14 @@ public class RideController {
 		
 	}
 	
+	@RequestMapping(value="/ride", method = RequestMethod.PUT)
+	public ResponseEntity acceptRequestRide(@RequestParam("rideId") Long rideId, @RequestParam("rideStatus") String rideStatus){
+		
+		System.out.println("ride **accept request received");
+		if(rideDAO.acceptRide(rideId,rideStatus))
+				return ResponseEntity.ok(null);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+		
+	}
+	
 }

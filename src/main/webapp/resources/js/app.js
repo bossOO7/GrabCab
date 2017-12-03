@@ -458,11 +458,15 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
              }
 
          }).success(function(data){
+        	 console.log(data);
+        	 console.log(data[0]);
+        	 console.log(data[0].reason);
+        	 $scope.data=data;
              if(data.statusCode==200){
-             $scope.rideID=data.rideID;
-             $scope.username=data.username;
-        	 $scope.UserRating=data.UserRating;
-        	 $scope.ride_pickupLocation=data.ride_pickupLocation;
+
+
+             $scope.data=data;
+        	
              }
     	       
     	            else{
@@ -470,7 +474,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 
     	            }
     	        }).error(function(error){
-
+    	        	console.log(error);
     	        })
     	 
     	 //post request for accepting selected ride
@@ -486,7 +490,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-		        	   RideId:$scope.RideId,
+		        	   rideId:$scope.rideId,
 		        	   rideStatus:'A'
 		           }
 		
