@@ -1,6 +1,7 @@
 package com.sjsu.grabCab.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,23 @@ public class PromoController {
 		if(promoDAO.addPromo( promocode, discountprice,admin.getEmail()))
 			return ResponseEntity.ok(null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+	}
+	
+	@RequestMapping(value="/promo", method = RequestMethod.GET)
+	public ResponseEntity getPromos(){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(promoDAO.getPromos());
+
+	}
+	
+	@RequestMapping(value="/assignPromo", method = RequestMethod.POST)
+	public ResponseEntity getPromos(@RequestParam("names") List<String> names,
+			@RequestParam("pcode") String pcode){
+		
+		System.out.println(names+" "+pcode);
+		promoDAO.assignPromos(names,pcode);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 
 	}
 

@@ -44,6 +44,35 @@ routerApp.controller('promoCodesController',['$scope','$http','$state','$window'
 	       })
 	}
 	
+	$scope.getPromos = function(){
+		$http({
+	           method:'get',
+	           url:'/grabCab/promo',
+	           headers: {"Content-Type":"application/x-www-form-urlencoded"},
+	           transformRequest: function(obj) {
+	               var str = [];
+	               for(var p in obj)
+	               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	               return str.join("&");
+	           },
+	           data:{	               
+	       
+	           }
+
+	       }).then(function(data){
+	           console.log("printing promo"+data + " "+JSON.stringify(data));
+	           var promo = [];
+	           for(var j = 0;j<data.data.length; j++){
+	        	   promo.push(data.data[j]['promocode']);
+	           }
+	           $scope.promo = promo;
+	           console.log($scope.promo);
+	           for(var i=0;i<$scope.promo.length;i++){
+	        	   console.log($scope.promo[i]['promocode']);
+	           }
+	       })
+	}
+	
 	$scope.loadPassengers = function(){
 		console.log("loadPassenger called");   
 		$http({
@@ -66,7 +95,8 @@ routerApp.controller('promoCodesController',['$scope','$http','$state','$window'
 	       })
 	}
 	$scope.isAnythingSelected = function () {
-	    var list = [];
+	    console.log("selected pcode"+$scope.pcode);
+		var list = [];
 		for(var i = 0; i < $scope.data.length; i++){
 	        if($scope.data[i].isRowSelected === true){
 	            console.log("selected row"+$scope.data[i]);
@@ -79,7 +109,25 @@ routerApp.controller('promoCodesController',['$scope','$http','$state','$window'
 		    }
 	    }
 		console.log(list);
+		$http({
+	           method:'post',
+	           url:'/grabCab/assignPromo',
+	           headers: {"Content-Type":"application/x-www-form-urlencoded"},
+	           transformRequest: function(obj) {
+	               var str = [];
+	               for(var p in obj)
+	               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	               return str.join("&");
+	           },
+	           data:{	               
+	        	   names : list,
+	        	   pcode: $scope.pcode
+	           }
 
+	       }).then(function(data){
+	           console.log(data);
+	           $scope.data = data.data;
+	       })
 	    return false;
 	};
 }]);

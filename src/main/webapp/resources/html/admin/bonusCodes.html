@@ -8,25 +8,25 @@
 	<div class = "row">
 		<div class = "col-md-4"></div>
 		<div class = "col-md-4">
-			<input type="string" class="form-control"  placeholder="promo10" ng-model="promocode">
-			<input type="string" class="form-control"  placeholder="promo10" ng-model="discountprice">
-    		<button type="button" class="btn btn-default" ng-click = "createPromo()">Create Promo Code</label>
+			<input type="string" class="form-control"  placeholder="bonuscode" ng-model="bonuscode">
+			<input type="string" class="form-control"  placeholder="amount" ng-model="amount">
+    		<button type="button" class="btn btn-default" ng-click = "createBonus()">Create Bonus Code</label>
 		</div>
 		
 	</div>
-	<div class ="container" ng-init = "loadPassengers()">
-		<div class = "row" ng-init = "getPromos()">
+	<div class ="container" ng-init = "loadDrivers()">
+		<div class = "row" ng-init = "getBonuses()">
 			<div class = "col-md-8">
 				<div ng-repeat = "item in data">
 					{{item.username}}
 					{{item.email}}
-					{{item.passengerClass}}
+					{{item.driverClass}}
 					<input type="checkbox" ng-checked="item.isRowSelected" ng-click="toggleSelection(item)" />
 				</div>
 			</div>
 			<div class = "col-md-4" >
-				<label>Select Promocode</label>
-				<select ng-model="pcode" ng-options="p for p in promo">
+				<label>Select BonusCode</label>
+				<select ng-model="bcode" ng-options="b for b in bonus">
 </select>
 			</div>
 		</div>
