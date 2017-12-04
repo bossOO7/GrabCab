@@ -597,6 +597,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      
       routerApp.controller('rideStatusController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.endRide=function(){  
+  		 console.log("in end ride Full scope id as " , $scope)
+		 console.log("Sending rider id in endride as " + $scope.rideid);
 	  		   $http({
 		           method:'POST',
 		           url:'/grabCab/ride2',
@@ -625,6 +627,39 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       })
 	       
 	   }
+  	   
+  	 {
+    	 //get request for ride id and status as in progress
+    	 
+    	 $http({
+             method:'get',
+             url:'/grabCab/status',
+             headers: {"Content-Type":"application/x-www-form-urlencoded"},
+             
+             data:{
+            	 
+             }
+
+         }).success(function(data){
+        	 console.log(data);
+        	 console.log(data[0]);
+        	 console.log(data[0].reason);
+        	 $scope.data=data;
+             if(data.statusCode==200){
+
+
+             $scope.data=data;
+        	
+             }
+    	       
+    	            else{
+
+
+    	            }
+    	        }).error(function(error){
+    	        	console.log(error);
+    	        })
+  	 }
      }])
      
      //

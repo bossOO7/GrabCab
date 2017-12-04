@@ -25,18 +25,29 @@ public class DriverDAOImpl implements DriverDAO{
 	private PrepareQuery prepareQuery;
 	
 	@Override
-	public boolean addUser(String licensenumber,String username, String password, String email,String phone) {
+	public boolean addUser(String licensenumber,String username, String password, String email,String phone,String cardNumber, String cardName, String expirydate) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String p = passwordEncoder.encode(password);
 		System.out.println(p);
 		String query = "Insert into Driver(licensenumber,username,password,email,phone,status) values ( \""+licensenumber+"\",\""+username+"\",\""+p+"\",\""+email+"\",\""+phone+"\""+",\"pending\")";
 		try {
 			database.executeUpdate(query);
-			return true;
+			
 		} catch (SQLException e) {
 			System.out.println("exception received");
+			return false;
 		}
-		return false;
+		
+		query = "Insert into Carddetails(email,cardnumber,cardname,expirydate) values ( \""+email+"\",\""+cardNumber+"\",\""+cardName+"\",\""+expirydate+"\")";
+		try {
+			database.executeUpdate(query);
+			
+		} catch (SQLException e) {
+			System.out.println("exception received");
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override

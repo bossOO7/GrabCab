@@ -14,7 +14,7 @@ import com.sjsu.grabCab.entity.Ride;
 
 public interface DriverDAO extends UserDetailsService{
 	
-	boolean addUser(String licensenumber,String username, String password, String email, String phone);
+	boolean addUser(String licensenumber,String username, String password, String email, String phone, String cardNumber, String cardName, String expirydate);
 	
 	public UserDetails loadUserByUsername(String username);
 	

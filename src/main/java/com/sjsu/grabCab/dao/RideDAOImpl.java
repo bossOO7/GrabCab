@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-
+import com.sjsu.grabCab.entity.Driver;
 import com.sjsu.grabCab.entity.Passenger;
 import com.sjsu.grabCab.entity.Ride;
 
@@ -134,5 +134,28 @@ WHERE rideId='R';
 	}
 
 	
+	
+	/*
+	public Ride getRideinprogress() {
+		//prepareQuery.setQuery("select *from Driver where username = ? or email = ?");
+		//prepareQuery.substitue(username);
+		//prepareQuery.substitue(username);
+		String query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		try{
+			rows = database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		if(rows.size()==0){
+			System.out.println("didn't get any rows back");
+			return null;
+		}
+		else{
+			Ride r = new Ride(rows.get(0).get("rideid"), rows.get(0).get("startTime"), rows.get(0).get("endTime"), (String) rows.get(0).get(""),(String) rows.get(0).get("password"),0, (String) rows.get(0).get("email"), query, query, query, query, query, query);
+			return r;
+		}
+	}
+	*/
 
 }

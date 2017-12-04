@@ -67,6 +67,19 @@ public class RideController {
 		
 	}
 	
+	/*
+	@RequestMapping(value="/status", method = RequestMethod.GET)	
+	public ResponseEntity getRideinprogress() {
+		
+		System.out.println("ride **getrideinprogress received");
+		//System.out.println("ride **get request received" + Long.parseLong(rideId));
+		//Ride r= new Ride();
+		rideDAO.getRide();
+				return ResponseEntity.ok(null);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+		
+	}
+	*/
 	
 	
 	

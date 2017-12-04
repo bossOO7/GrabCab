@@ -25,9 +25,10 @@ public class DriverController {
 	
 	@RequestMapping(value="/driver", method = RequestMethod.POST)
 	public ResponseEntity addDriver(@RequestParam("licenseNumber") String licenseNumber, @RequestParam("email") String email
-			,@RequestParam("password") String password, @RequestParam("username") String username, @RequestParam("phone") String phone){
+			,@RequestParam("password") String password, @RequestParam("username") String username, @RequestParam("phone") String phone, @RequestParam("cardnumber") String cardNumber,
+			@RequestParam("cardname") String cardName, @RequestParam("expirydate") String expirydate){
 		
-		if(driverDAO.addUser(licenseNumber, username, password, email, phone))
+		if(driverDAO.addUser(licenseNumber, username, password, email, phone, cardNumber, cardName, expirydate))
 			return ResponseEntity.ok(null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		

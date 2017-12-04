@@ -32,7 +32,9 @@ public class Ride {
 	
 	private String passengerRating;
 	
-	
+	public Ride(){
+		
+	}
 	
 	
 	
