@@ -479,9 +479,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     	 
     	 //post request for accepting selected ride
   	   $scope.accept=function(){  
+    		 //console.log("test"+x);
+    		 console.log("Full scope id as " , $scope)
+    		 console.log("Sending rider id as " + $scope.rideid);
 	  		   $http({
-		           method:'PUT',
-		           url:'/grabCab/ride',
+		           method:'POST',
+		           url:'/grabCab/ride1',
 		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
 		           transformRequest: function(obj) {
 		               var str = [];
@@ -490,8 +493,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-		        	   rideId:$scope.rideId,
+		        	   rideId:$scope.rideid,
 		        	   rideStatus:'A'
+		        		  
 		           }
 		
 		       }).then(function(data){
@@ -520,8 +524,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
       routerApp.controller('rideStatusController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
   	   $scope.endRide=function(){  
 	  		   $http({
-		           method:'PUT',
-		           url:'/grabCab/ride',
+		           method:'POST',
+		           url:'/grabCab/ride2',
 		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
 		           transformRequest: function(obj) {
 		               var str = [];
@@ -530,7 +534,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-		        	   RideId:$scope.RideId,
+		        	   rideId:$scope.rideid,
 		        	   rideStatus:'C'
 		           }
 		

@@ -8,14 +8,17 @@
 <table>
 <tr ng-repeat="ride in data">
 
-        <td>{{ride.rideID}}</td>
-        <td>{{ride.username}}</td>
-        <td>{{ride.UserRating}}</td>
-        <td>{{ride.ride_pickupLocation}}</td>
+        <td>{{ride.rideid}}</td>
+        <td>{{ride.ridestatus}}</td>
+        <td>{{ride.Userrating}}</td>
+        <td>{{ride.pickuplocation}}</td>
+         <td>{{ride.dropofflocation}}</td>
+        <td>{{ride.cartype}}</td> 
 
         <td>
-      <input type="radio" name="accept" value="yes">
+      <input type="radio" name="accept" ng-model="$parent.rideid" ng-value={{ride.rideid}}>
     </td>
+    
 </tr>
 </table>
 <div class="container-fluid">

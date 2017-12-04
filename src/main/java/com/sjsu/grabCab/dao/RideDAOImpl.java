@@ -78,14 +78,15 @@ public class RideDAOImpl implements RideDAO {
 	}
 	
 	public Boolean acceptRide(Long rideId, String rideStatus) {
-		System.out.println("update ride status");
-		String query = "Update Ride SET ridestatus= ? where ridestatus='R' and rideid=? ";
+		System.out.println("update ride status "+rideId);
+		
+		String query = "Update Ride SET ridestatus = ? where rideid = ?";
 		prepareQuery.setQuery(query);
 		prepareQuery.substitue(rideStatus);
 		prepareQuery.substitue(rideId);
-		
+		query = prepareQuery.getQuery();
 		try{
-			database.executeQuery(query);
+			database.executeUpdate(query);
 		} catch(SQLException e){
 			e.printStackTrace();
 			//return false;
@@ -104,7 +105,34 @@ WHERE rideId='R';
 		//return null;
 	}
 
-	
+	public Boolean endRide(Long rideId, String rideStatus) {
+		System.out.println("end ride status "+rideId);
+		
+		String query = "Update Ride SET ridestatus = ? where rideid = ?";
+		prepareQuery.setQuery(query);
+		prepareQuery.substitue(rideStatus);
+		prepareQuery.substitue(rideId);
+		query = prepareQuery.getQuery();
+		try{
+			database.executeUpdate(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+			//return false;
+		}
+		return true;
+		
+			//Ride r = new Ride((Long) rows.get(0).get("rideId"), (Date) rows.get(0).get("startTime"),(Date) rows.get(0).get("endTime"),(String) rows.get(0).get("pickUpLocation"),(String) rows.get(0).get("dropOffLocation"),(double) rows.get(0).get("cost"), (String) rows.get(0).get("carType"), (String) rows.get(0).get("reason"), (String) rows.get(0).get("rideStatus"), (String) rows.get(0).get("driverRating"), (String) rows.get(0).get("passengerRating"),(String) rows.get(0).get("licenseNumber"),(String) rows.get(0).get("email"));
+		
+		/*
+		 * UPDATE Ride
+SET rideId='A'
+WHERE rideId='R';
+		 * 
+		 * */
+		
+		//return null;
+	}
+
 	
 
 }

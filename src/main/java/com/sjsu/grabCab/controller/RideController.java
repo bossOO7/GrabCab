@@ -44,14 +44,31 @@ public class RideController {
 		
 	}
 	
-	@RequestMapping(value="/ride", method = RequestMethod.PUT)
-	public ResponseEntity acceptRequestRide(@RequestParam("rideId") Long rideId, @RequestParam("rideStatus") String rideStatus){
+	@RequestMapping(value="/ride1", method = RequestMethod.POST)
+	public ResponseEntity acceptRequestRide(@RequestParam("rideId") String rideId, @RequestParam("rideStatus") String rideStatus){
 		
-		System.out.println("ride **accept request received");
-		if(rideDAO.acceptRide(rideId,rideStatus))
+		System.out.println("ride **accept request received" + rideId);
+		System.out.println("ride **accept request received" + Long.parseLong(rideId));
+		if(rideDAO.acceptRide(Long.parseLong(rideId),rideStatus))
 				return ResponseEntity.ok(null);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
 	}
+	
+	
+	@RequestMapping(value="/ride2", method = RequestMethod.POST)
+	public ResponseEntity endRequestRide(@RequestParam("rideId") String rideId, @RequestParam("rideStatus") String rideStatus){
+		
+		System.out.println("ride **end request received" + rideId);
+		System.out.println("ride **end request received" + Long.parseLong(rideId));
+		if(rideDAO.endRide(Long.parseLong(rideId),rideStatus))
+				return ResponseEntity.ok(null);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+		
+	}
+	
+	
+	
+	
 	
 }
