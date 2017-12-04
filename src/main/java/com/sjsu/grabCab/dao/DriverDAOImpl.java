@@ -1,6 +1,7 @@
 package com.sjsu.grabCab.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class DriverDAOImpl implements DriverDAO{
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String p = passwordEncoder.encode(password);
 		System.out.println(p);
-		String query = "Insert into Driver(licensenumber,username,password,email,phone) values ( \""+licensenumber+"\",\""+username+"\",\""+p+"\",\""+email+"\",\""+phone+"\")";
+		String query = "Insert into Driver(licensenumber,username,password,email,phone,status) values ( \""+licensenumber+"\",\""+username+"\",\""+p+"\",\""+email+"\",\""+phone+"\""+",\"pending\")";
 		try {
 			database.executeUpdate(query);
 			return true;
@@ -55,7 +56,7 @@ public class DriverDAOImpl implements DriverDAO{
 		if(rows.size()==0){
 			//throw new Exception("No user found with that username");
 		}
-		Driver d = new Driver((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"));
+		Driver d = new Driver((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"),(String)rows.get(0).get("status"));
 		return (UserDetails) d;
 	}
 
@@ -76,7 +77,7 @@ public class DriverDAOImpl implements DriverDAO{
 			return null;
 		}
 		else{
-			Driver d = new Driver((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"));
+			Driver d = new Driver((String) rows.get(0).get("username"),(String) rows.get(0).get("password"),(String) rows.get(0).get("email"),(String)rows.get(0).get("status"));
 			return d;
 		}
 	}
@@ -105,5 +106,49 @@ public class DriverDAOImpl implements DriverDAO{
 			return rows;
 		}
 	}
+
+	@Override
+	public List<Driver> getPendingDrivers() {
+		List<Driver> pendingDrivers = new ArrayList<>();
+		prepareQuery.setQuery("select * from Driver where status = 'pending'");
+		String query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		try{
+			rows = database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		if(rows.size()==0){
+			System.out.println("didn't get any rows back");
+			return null;
+		}
+		else{
+			int len = rows.size();
+			for(int i=0;i<len;i++){
+				Driver d = new Driver((String)rows.get(i).get("licensenumber"),
+						(String) rows.get(i).get("username"),
+						(String) rows.get(i).get("email"),
+						(String) rows.get(i).get("status"),
+						(String) rows.get(i).get("phone"));
+				pendingDrivers.add(d);		
+			}
+		}
+		return pendingDrivers;
+	}
+
+	@Override
+	public void approveDriver(String email) {
+		prepareQuery.setQuery("update Driver set status = 'approved' where email = ?");
+		prepareQuery.substitue(email);
+		String query = prepareQuery.getQuery();
+		try{
+			database.executeUpdate(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+
+
 
 }

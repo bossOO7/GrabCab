@@ -1,6 +1,7 @@
 package com.sjsu.grabCab.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -89,6 +90,30 @@ public class PassengerDAOImpl implements PassengerDAO {
 
 			return p;
 		}
+	}
+
+	@Override
+	public List<Passenger> getAllPassengers() {
+		String query = "select email,username,class from Passenger";
+		prepareQuery.setQuery(query);
+		query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		List<Passenger> listOfPassengers = new ArrayList<Passenger>();
+		try{
+			rows = database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		if(rows.size()==0){
+			System.out.println("didn't get any rows back");
+			return listOfPassengers;
+		}else{
+			for(int i=0;i<rows.size();i++){
+				Passenger p = new Passenger((String) rows.get(i).get("email"),(String) rows.get(i).get("username"),(String) rows.get(i).get("class"));
+				listOfPassengers.add(p);
+			}
+		}
+		return listOfPassengers;
 	}
 
 }

@@ -1,0 +1,21 @@
+<html ng-app="routerApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Select passenger for promo code!!!</title>
+</head>
+<body>
+<table>
+<tr ng-repeat="passenger in data">
+        <td>{{passenger.username}}</td>
+        <td>{{passenger.email}}</td>
+        <td>
+      <input type="radio" name="accept" value="yes">
+    </td>
+</tr>
+</table>
+<div class="container-fluid">
+	<h1>Generate promo code for selected passenger!!!</h1>
+	<button type="button" class="btn btn-default" ng-click = "generate1()">Generate</button>
+</div>
+</body>
+</html>

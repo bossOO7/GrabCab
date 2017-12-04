@@ -74,6 +74,13 @@ public class Passenger implements UserDetails{
 	public Passenger() {
 		super();
 	}
+	
+	public Passenger(String email, String username, String passengerClass) {
+		super();
+		this.email = email;
+		this.username = username;
+		this.passengerClass = passengerClass;
+	}
 
 	public String getUsername() {
 		return username;

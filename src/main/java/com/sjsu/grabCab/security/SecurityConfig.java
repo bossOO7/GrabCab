@@ -24,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private DriverAuthenticationProvider driverAuthenticationProvider;
+	
+	@Autowired
+	private AdminAuthenticationProvider adminAuthenticationProvider;
 
 	@Autowired
 	private MySavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler;
@@ -34,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.passwordEncoder(passwordEncoder());
 		auth.authenticationProvider(passengerAuthenticationProvider);
 		auth.authenticationProvider(driverAuthenticationProvider);
+		auth.authenticationProvider(adminAuthenticationProvider);
 	}
 
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -45,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests().antMatchers("/").permitAll().antMatchers("/resources/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/passenger").permitAll()
 				.antMatchers(HttpMethod.POST, "/driver").permitAll()
+				.antMatchers(HttpMethod.POST, "/admin").permitAll()
 				.anyRequest().authenticated().and().formLogin()
 				.successHandler(authenticationSuccessHandler)
 				.failureHandler(new SimpleUrlAuthenticationFailureHandler()).loginPage("/").and().logout();

@@ -3,6 +3,7 @@ package com.sjsu.grabCab.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sjsu.grabCab.dao.DriverDAO;
+import com.sjsu.grabCab.entity.Driver;
 import com.sjsu.grabCab.entity.Ride;
 
 @Controller
@@ -39,6 +41,20 @@ public class DriverController {
 			 
 			 return ResponseEntity.status(HttpStatus.OK).body(response);	 
 		}
+	
+	@RequestMapping(value="/driver/pending", method = RequestMethod.GET)
+	public ResponseEntity getPendingDrivers(){
+		    
+			return ResponseEntity.status(HttpStatus.OK).body(driverDAO.getPendingDrivers());
+	}
+	
+	@RequestMapping(value="/driver/approve", method = RequestMethod.POST)
+	public ResponseEntity approveDriver(@RequestParam("status") String status,@RequestParam("email") String email){
+		
+		driverDAO.approveDriver(email);
+		System.out.println("email is"+email);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+	}
 	
 	
 }

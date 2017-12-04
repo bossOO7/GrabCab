@@ -35,5 +35,12 @@ public class PassengerController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
 	}
+	
+	@RequestMapping(value="/passenger", method = RequestMethod.GET)
+	public ResponseEntity  getPassengers(){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(passengerDAO.getAllPassengers());
+		
+	}
 
 }

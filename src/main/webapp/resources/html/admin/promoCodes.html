@@ -1,0 +1,43 @@
+<html ng-app="routerApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container-fluid">
+	<div class = "row">
+		<div class = "col-md-4"></div>
+		<div class = "col-md-4">
+			<input type="string" class="form-control"  placeholder="promo10" ng-model="promocode">
+			<input type="string" class="form-control"  placeholder="promo10" ng-model="discountprice">
+    		<button type="button" class="btn btn-default" ng-click = "createPromo()">Create Promo Code</label>
+		</div>
+		
+	</div>
+	<div class ="container" ng-init = "loadPassengers()">
+		<div class = "row">
+		<div class = "col-md-8">
+			<div ng-repeat = "item in data">
+				{{item.username}}
+				{{item.email}}
+				{{item.passengerClass}}
+				<input type="checkbox" ng-checked="item.isRowSelected" ng-click="toggleSelection(item)" />
+			</div>
+		</div>
+		<div class = "col-md-4">
+			<div class="dropdown">
+			  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Promocode
+			  <span class="caret"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="#">HTML</a></li>
+			    <li><a href="#">CSS</a></li>
+			    <li><a href="#">JavaScript</a></li>
+			  </ul>
+			</div>
+		</div>
+		</div>
+		<button type="button" class="btn btn-default" ng-click="isAnythingSelected()">check</button>
+	</div>
+</div>
+</body>
+</html>

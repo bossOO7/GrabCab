@@ -3,6 +3,8 @@ package com.sjsu.grabCab.dao;
 import java.util.List;
 import java.util.Map;
 
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -19,4 +21,9 @@ public interface DriverDAO extends UserDetailsService{
 	public Driver getDriver(String username);
 	
 	public List<Map<String, Object>> getRides();
+
+	public List<Driver> getPendingDrivers();
+	
+	public void approveDriver(String email);
+
 }

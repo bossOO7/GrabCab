@@ -41,7 +41,12 @@ public class DriverAuthenticationProvider implements AuthenticationProvider {
 			System.out.println(d.getUsername()+d.getPassword());
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			if (passwordEncoder.matches(password, d.getPassword())) {
-				return new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
+				if(d.getStatus().equals("approved")){
+					return new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
+				}
+				else{
+					throw new BadCredentialsException("External system authentication failed");
+				}
 			} else {
 				throw new BadCredentialsException("External system authentication failed");
 			}

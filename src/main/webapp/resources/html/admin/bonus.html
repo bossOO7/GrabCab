@@ -1,0 +1,21 @@
+<html ng-app="routerApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Select driver for bonus code!!!</title>
+</head>
+<body>
+<table>
+<tr ng-repeat="driver in data">
+        <td>{{driver.username}}</td>
+        <td>{{driver.email}}</td>
+        <td>
+      <input type="radio" name="accept" value="yes">
+    </td>
+</tr>
+</table>
+<div class="container-fluid">
+	<h1>Generate bonus code for selected driver!!!</h1>
+	<button type="button" class="btn btn-default" ng-click = "generate1()">Generate</button>
+</div>
+</body>
+</html>

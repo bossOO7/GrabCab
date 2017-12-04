@@ -137,21 +137,51 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         		}
         	}
         })
-        
-//------------------------------------------------------------------------------------------------------
-        .state('app.historyDriver',{
-        	url: 'driverHistory',
+ 
+ //----------------------------------------------------------------------------------------------------
+        .state('app.adminHome',{
+        	url: 'admin',
         	views: {
         		'header@':{
         			templateUrl: 'resources/html/header.html'
         		},
         		'content@':{
-        			templateUrl: 'resources/html/driver/historyDriver.html',
-        			controller: 'historyDriverController'
+        			templateUrl: 'resources/html/admin/admin.html',
+        			controller: 'adminHomeController'
         		}
         	}
         })
-               
+        
+   //----------------------------------------------------------------------------------------------------
+        
+        .state('app.pendingRequests',{
+        	url: 'admin/pendingRequests',
+        	views: {
+        		'header@':{
+        			templateUrl: 'resources/html/header.html'
+        		},
+        		'content@':{
+        			templateUrl: 'resources/html/admin/pendingRequests.html',
+        			controller: 'pendingRequestsController'
+        		}
+        	}
+        })
+        
+    //----------------------------------------------------------------------------------------------------
+        
+        .state('app.promoCodes',{
+        	url: 'admin/promoCodes',
+        	views: {
+        		'header@':{
+        			templateUrl: 'resources/html/header.html'
+        		},
+        		'content@':{
+        			templateUrl: 'resources/html/admin/promoCodes.html',
+        			controller: 'promoCodesController'
+        		}
+        	}
+        })
+        
         
 });
 
@@ -190,7 +220,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		           }
 		       })
 		   }
-		   else{
+		   else if($scope.driverOrPassenger=="passenger"){
 			   $http({
 		           method:'post',
 		           url:'/grabCab/',
@@ -212,6 +242,35 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		    	   if(data.status==200){
 		               console.log(data.token);
 		    		   $state.transitionTo("app.passengerHome");
+		            }
+		           else{
+		               
+		
+		           }
+		       })
+		   }
+		   else{
+			   $http({
+		           method:'post',
+		           url:'/grabCab/',
+		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
+		           transformRequest: function(obj) {
+		               var str = [];
+		               for(var p in obj)
+		               str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		               return str.join("&");
+		           },
+		           data:{
+		               username:$scope.email,
+		               password:$scope.password,
+		               type:"admin"
+		           }
+		
+		       }).then(function(data){
+		           console.log(data);
+		    	   if(data.status==200){
+		               console.log(data.token);
+		    		   $state.transitionTo("app.adminHome");
 		            }
 		           else{
 		               

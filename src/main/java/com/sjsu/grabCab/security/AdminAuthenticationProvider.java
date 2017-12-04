@@ -8,39 +8,37 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.sjsu.grabCab.dao.PassengerDAO;
-import com.sjsu.grabCab.entity.Passenger;
+import com.sjsu.grabCab.dao.AdminDAO;
+import com.sjsu.grabCab.entity.Admin;
 
 @Component
-public class PassengerAuthenticationProvider implements AuthenticationProvider {
+public class AdminAuthenticationProvider implements AuthenticationProvider{
 
 	@Autowired
-	private PassengerDAO passengerDAO;
-
+	private AdminDAO adminDAO;
+	
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		String username = auth.getName();
 		String password = auth.getCredentials().toString();
-		//System.out.println("printing type "+request.getAttribute("type"));
 		ServletRequestAttributes attrs = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
-		//System.out.println("printing type "+attrs.getRequest().getParameter("type"));
-		if(!attrs.getRequest().getParameter("type").equalsIgnoreCase("passenger")){
+		System.out.println("printing type "+attrs.getRequest().getParameter("type"));
+		if(!attrs.getRequest().getParameter("type").equalsIgnoreCase("admin")){
 			throw new BadCredentialsException("External system authentication failed");
 		}
-		Passenger p = passengerDAO.getPassenger(username);
-
-		if (p == null) {
+		
+		Admin a = adminDAO.getAdmin(username);
+		if (a == null) {
 			throw new BadCredentialsException("External system authentication failed");
 		} else {
-			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			System.out.println(passwordEncoder.encode(password));
-			if (passwordEncoder.matches(password, p.getPassword())) {
-				return new UsernamePasswordAuthenticationToken(username, passwordEncoder.encode(password), Collections.emptyList());
+			System.out.println(a.getUsername()+a.getPassword());
+			//BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			if (password.equals(a.getPassword())) {
+				return new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
 			} else {
 				throw new BadCredentialsException("External system authentication failed");
 			}
@@ -51,4 +49,5 @@ public class PassengerAuthenticationProvider implements AuthenticationProvider {
 	public boolean supports(Class<?> auth) {
 		return auth.equals(UsernamePasswordAuthenticationToken.class);
 	}
+
 }
