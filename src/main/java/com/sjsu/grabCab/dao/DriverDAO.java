@@ -25,5 +25,7 @@ public interface DriverDAO extends UserDetailsService{
 	public List<Driver> getPendingDrivers();
 	
 	public void approveDriver(String email);
+	
+	public List<Driver> getAllDrivers();
 
 }

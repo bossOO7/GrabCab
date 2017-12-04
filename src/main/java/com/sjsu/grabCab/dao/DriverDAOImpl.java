@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.sjsu.grabCab.entity.Driver;
+import com.sjsu.grabCab.entity.Passenger;
 import com.sjsu.grabCab.entity.Ride;
 
 @Repository
@@ -147,6 +148,30 @@ public class DriverDAOImpl implements DriverDAO{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public List<Driver> getAllDrivers() {
+		prepareQuery.setQuery("select email,username,class from Driver where status=?");
+		prepareQuery.substitue("approved");
+		String query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		List<Driver> listOfDrivers = new ArrayList<Driver>();
+		try{
+			rows = database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		if(rows.size()==0){
+			System.out.println("didn't get any rows back");
+			return listOfDrivers;
+		}else{
+			for(int i=0;i<rows.size();i++){
+				Driver d = new Driver((String) rows.get(i).get("email"),(String) rows.get(i).get("username"),(String) rows.get(i).get("class"));
+				listOfDrivers.add(d);
+			}
+		}
+		return listOfDrivers;
 	}
 
 

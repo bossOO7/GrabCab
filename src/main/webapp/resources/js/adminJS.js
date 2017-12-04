@@ -8,6 +8,10 @@ routerApp.controller('adminHomeController',['$scope','$http','$state','$window',
 		console.log("reaching fun");
 		$state.transitionTo("app.promoCodes");
 	}
+	$scope.bonus = function(){
+		console.log("reaching fun");
+		$state.transitionTo("app.bonusCodes");
+	}
 }]);
 
 routerApp.controller('promoCodesController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){

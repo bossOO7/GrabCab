@@ -26,7 +26,16 @@ public class Driver implements UserDetails{
 	
 	private String status;
 	
+	private String driverClass;
+	
 
+	public Driver(String email, String username, String driverClass) {
+		super();
+		this.email = email;
+		this.username = username;
+		this.driverClass = driverClass;
+	}
+	
 	public String getLicenseNumber() {
 		return licenseNumber;
 	}

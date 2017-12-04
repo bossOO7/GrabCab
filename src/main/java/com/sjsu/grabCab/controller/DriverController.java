@@ -56,5 +56,13 @@ public class DriverController {
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 	
+	@RequestMapping(value="/allDrivers", method = RequestMethod.GET)
+	public ResponseEntity<List> getAllDrivers(){
+		System.out.println("inside get rides");
+		List<Driver> response = driverDAO.getAllDrivers();
+			 
+		return ResponseEntity.status(HttpStatus.OK).body(response);	 
+	}
+	
 	
 }

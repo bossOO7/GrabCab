@@ -182,6 +182,21 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         	}
         })
         
+       //----------------------------------------------------------------------------------------------------
+        
+         .state('app.bonusCodes',{
+        	url: 'admin/bonusCodes',
+        	views: {
+        		'header@':{
+        			templateUrl: 'resources/html/header.html'
+        		},
+        		'content@':{
+        			templateUrl: 'resources/html/admin/bonusCodes.html',
+        			controller: 'bonusCodesController'
+        		}
+        	}
+        })
+        
         
 });
 
