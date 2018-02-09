@@ -28,4 +28,8 @@ public interface DriverDAO extends UserDetailsService{
 	
 	public List<Driver> getAllDrivers();
 
+	List<Map<String, Object>> getRideHistory(String username);
+
+	boolean updateRating( String passengerRating);
+
 }

@@ -19,6 +19,7 @@ public class PrepareQuery {
 		this.query = query;
 	}
 	void substitue(String data){
+		System.out.println(query);
 		int index = query.indexOf('?');
 		if(index == -1){
 			System.out.println("Exception");
@@ -45,5 +46,13 @@ public class PrepareQuery {
 		String part2 = query.substring(index+1);
 		query = part1+data+part2;
 	}
-	
+	void substitue(double data){
+		int index = query.indexOf('?');
+		if(index == -1){
+			System.out.println("Exception");
+		}
+		String part1 = query.substring(0, index);
+		String part2 = query.substring(index+1);
+		query = part1+"\""+data+"\""+part2;
+	}
 }

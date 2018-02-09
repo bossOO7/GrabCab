@@ -1,5 +1,6 @@
 package com.sjsu.grabCab.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,5 +66,28 @@ public class DriverController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);	 
 	}
 	
+	@RequestMapping(value="/driver/historyDriver", method = RequestMethod.GET)
+	public ResponseEntity<List> getDriverHistory(Principal principal){
+		
+		String username = principal.getName();
+		List<Map<String, Object>> response = driverDAO.getRideHistory(username);
+		
+			 
+			 return ResponseEntity.status(HttpStatus.OK).body(response);	
+			
+		
+
+	}
+	
+	@RequestMapping(value="/ratepassenger", method = RequestMethod.POST)
+	public ResponseEntity updatePassengerRating(
+			@RequestParam("UserRating") String Rating){
+		String passengerRating = Rating.concat("*") ;
+		System.out.println("passengerRating "+passengerRating);
+		
+		if(driverDAO.updateRating(passengerRating))
+			return ResponseEntity.ok(null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	}
 	
 }

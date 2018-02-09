@@ -185,6 +185,51 @@ public class DriverDAOImpl implements DriverDAO{
 		return listOfDrivers;
 	}
 
+	@Override
+	public List<Map<String, Object>> getRideHistory(String username) {
+		// TODO Auto-generated method stub
+		
+		prepareQuery.setQuery("Select * from Passenger_History where username = ?");
+		prepareQuery.substitue(username);
+		String query = prepareQuery.getQuery();
+		List<Map<String, Object>> rows = null;
+		
+		try{
+			rows = database.executeQuery(query);
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		if(rows.size()==0){
+			System.out.println("didn't get any rows back");
+			return rows;
+		}else{
+			return rows;
+		}
+		
+	}
+
+	@Override
+	public boolean updateRating(String passengerRating) {
+		// TODO Auto-generated method stub
+		System.out.println("update passenger rating");
+		
+		String query = "Update Ride set passengerrating = ? WHERE passengerrating IS NULL ";
+		prepareQuery.setQuery(query);
+		prepareQuery.substitue(passengerRating);
+		
+		
+		
+		query = prepareQuery.getQuery();
+		try {
+			database.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("exception received "+e);
+			return false;
+		}
+		return true;
+		
+	}
+
 
 
 }

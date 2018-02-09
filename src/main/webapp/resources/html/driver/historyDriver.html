@@ -1,29 +1,38 @@
 <html ng-app='routerApp'>
 <head>
     <title></title>
+<style>
+body{
+   
+    
+    background-image: url("https://www.picwallz.com/wp-content/uploads/2017/02/wallpaper-car-background-hd-pulse-on-cars-image-for-mobile-grey.jpeg");
+    background-repeat: no-repeat;
+    background-size: 1440px 1000px ;
+}
+</style>
 </head>
 <body>
-<h1> <center>Passenger History</center></h1>
+<h1> <center>Driver History</center></h1>
      <table>
     <tr>
-        <td>RideId</td>
-        <td>DriverName</td>
-        <td>Pickup</td>
-        <td>StartedAt</td>
-        <td>DropOff</td>
-        <td>EndedAt</td>
-        <td>Cost</td>
-        <td>UserRating</td>
+        <th>&nbsp;&nbsp;&nbsp;RideId</th>
+        <th>DriverName</th>
+        <th>Pickup</th>
+        <th>StartedAt</th>
+        <th>DropOff</th>
+        <th>EndedAt&nbsp;&nbsp;&nbsp;</th>
+        <th>Cost</th>
+       
      </tr>
 <tr ng-repeat="ride in data">
-        <td>{{ride.rideid}}</td>
+        <td>&nbsp;&nbsp;&nbsp;{{ride.rideid}}</td>
         <td>{{ride.username}}</td>
         <td>{{ride.pickuplocation}}</td>
-        <td>{{ride.starttime}}</td>
+        <td>{{ride.starttime}}&nbsp;&nbsp;&nbsp;</td>
         <td>{{ride.dropofflocation}}</td>
-        <td>{{ride.endtime}}</td>
+        <td>{{ride.endtime}}&nbsp;&nbsp;&nbsp;</td>
         <td>{{ride.cost}}</td>
-        <td>{{ride.UserRating}}</td>
+        
         
 
 </tr>

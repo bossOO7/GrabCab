@@ -1,5 +1,9 @@
 package com.sjsu.grabCab.controller;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +22,8 @@ public class RideController {
 	@Autowired
 	RideDAO rideDAO;
 	
+	
+	
 	@RequestMapping(value="/test", method = RequestMethod.POST)
 	public @ResponseBody Ride test(){
 	
@@ -35,21 +41,50 @@ public class RideController {
 //	}
 	
 	@RequestMapping(value="/ride", method = RequestMethod.POST)
-	public ResponseEntity requestforRide(@RequestParam("pickupLocation") String pickupLocation, @RequestParam("dropOffLocation") String dropOffLocation, @RequestParam("carType") String carType){
+	public ResponseEntity requestforRide(Principal principal, @RequestParam("pickupLocation") String pickUpLocation, @RequestParam("dropOffLocation") String dropOffLocation, @RequestParam("carType") String carType){
+		String email = principal.getName();
+		System.out.println("ride request for email"+ email);
+		System.out.println("ride request received");
+		if(rideDAO.requestRide(email,pickUpLocation, dropOffLocation, carType))
+			return ResponseEntity.ok(null);
+		return ResponseEntity.status(HttpStatus.OK).body(null);	
+	}
+	
+	@RequestMapping(value="/cancel", method = RequestMethod.POST)
+	public ResponseEntity cancelRequestedRide(@RequestParam("Reason") String reason, @RequestParam("rideStatus") String rideStatus){
 	
 		System.out.println("ride request received");
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		if(rideDAO.cancelRide(reason, rideStatus))
+			return ResponseEntity.ok(null);
+		return ResponseEntity.status(HttpStatus.OK).body(null);	
+	}
+	
+	@RequestMapping(value="/isRideAccepted", method = RequestMethod.GET)
+	public ResponseEntity showAcceptedRide(Principal principal){
+	    
+	    
+	    String email = principal.getName();
+		System.out.println("ride request received for email"+ email);
 		
-
 		
+			System.out.println("inside get rides");
+			Ride response = rideDAO.getAcceptedRide(email);
+			System.out.println("Accepted ride id response :"+response.getId());
+			System.out.println("Accepted ride status response :"+response.getRideStatus());
+			//System.out.println("Accepted Rides:"+response );
+				 return ResponseEntity.status(HttpStatus.OK).body(response);	 
+		
+	
+			
+	
 	}
 	
 	@RequestMapping(value="/ride1", method = RequestMethod.POST)
-	public ResponseEntity acceptRequestRide(@RequestParam("rideId") String rideId, @RequestParam("rideStatus") String rideStatus){
-		
+	public ResponseEntity acceptRequestRide(Principal principal,@RequestParam("rideId") String rideId, @RequestParam("rideStatus") String rideStatus){
+		String username = principal.getName();
 		System.out.println("ride **accept request received" + rideId);
 		System.out.println("ride **accept request received" + Long.parseLong(rideId));
-		if(rideDAO.acceptRide(Long.parseLong(rideId),rideStatus))
+		if(rideDAO.acceptRide(username,Long.parseLong(rideId),rideStatus))
 				return ResponseEntity.ok(null);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
@@ -67,19 +102,20 @@ public class RideController {
 		
 	}
 	
-	/*
+	
 	@RequestMapping(value="/status", method = RequestMethod.GET)	
 	public ResponseEntity getRideinprogress() {
 		
 		System.out.println("ride **getrideinprogress received");
 		//System.out.println("ride **get request received" + Long.parseLong(rideId));
 		//Ride r= new Ride();
-		rideDAO.getRide();
-				return ResponseEntity.ok(null);
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		Ride response = rideDAO.getRide();
+		System.out.println("ride id response :"+response.getId());
+		System.out.println("ride status response :"+response.getRideStatus());
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 		
 	}
-	*/
+	
 	
 	
 	

@@ -23,15 +23,39 @@ public class PassengerDAOImpl implements PassengerDAO {
 	private PrepareQuery prepareQuery;
 
 	@Override
-	public Boolean addUser(String username, String password, String email, String phone) {
+	public Boolean addUser( String username,String email, String phone, String password,String cardNumber, String cardName, String expirydate) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String p = passwordEncoder.encode(password);
-		String query = "Insert into Passenger(username,password,email,phone) values(?,?,?,?)";
+		System.out.println("Insert Into Passenger: Adding Passenger" + username);
+		String query = "Insert into Passenger(email,username,phone,password) values(?,?,?,?)";
+		
 		prepareQuery.setQuery(query);
-		prepareQuery.substitue(username);
-		prepareQuery.substitue(p);
 		prepareQuery.substitue(email);
+		prepareQuery.substitue(username);
 		prepareQuery.substitue(phone);
+		prepareQuery.substitue(p);
+		
+		query = prepareQuery.getQuery();
+		try {
+			database.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("exception received "+e);
+			return false;
+		}
+		
+		
+		
+		
+		
+		System.out.println("Insert Into Card: Adding Passenger" + username);
+		query = "Insert into Carddetails(email,cardnumber,cardname,expirydate) values(?,?,?,?)";
+		
+		prepareQuery.setQuery(query);
+		prepareQuery.substitue(email);
+		prepareQuery.substitue(cardNumber);
+		prepareQuery.substitue(cardName);
+		prepareQuery.substitue(expirydate);
+		
 		query = prepareQuery.getQuery();
 		try {
 			database.executeUpdate(query);
@@ -44,7 +68,7 @@ public class PassengerDAOImpl implements PassengerDAO {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		System.out.println("from dao impl" + username);
+		System.out.println("Select from Passenger: Get Passenger  " + username);
 		System.out.println(username);
 		String query = "Select *from Passenger where username = ? or email= ?";
 		prepareQuery.setQuery(query);
@@ -69,10 +93,10 @@ public class PassengerDAOImpl implements PassengerDAO {
 
 	@Override
 	public Passenger getPassenger(String username) {
-		String query = "select *from Passenger where username = ? or email = ?";
+		String query = "select *from Passenger where email = ?";
 		prepareQuery.setQuery(query);
 		prepareQuery.substitue(username);
-		prepareQuery.substitue(username);
+		//prepareQuery.substitue(username);
 		query = prepareQuery.getQuery();
 		List<Map<String, Object>> rows = null;
 		try{
@@ -114,6 +138,50 @@ public class PassengerDAOImpl implements PassengerDAO {
 			}
 		}
 		return listOfPassengers;
+	}
+	public List<Map<String, Object>> getRideHistory() {
+		// TODO Auto-generated method stub
+		
+		
+			prepareQuery.setQuery("select * from Passenger_History ");
+			
+			String query = prepareQuery.getQuery();
+			List<Map<String, Object>> rows = null;
+			try{
+				rows = database.executeQuery(query);
+				System.out.println("printing rows from db "+rows);
+			} catch(SQLException e){
+				e.printStackTrace();
+			}
+			if(rows.size()==0){
+				System.out.println("didn't get any rows back");
+				return null;
+			}
+			else{
+				
+				return rows;
+			}
+			
+	}
+
+	@Override
+	public boolean updateRide(String driverRating) {
+		// TODO Auto-generated method stub
+		System.out.println("update driver rating");
+		String query = "Update Ride set driverrating = ? WHERE driverrating IS NULL ";
+		prepareQuery.setQuery(query);
+		prepareQuery.substitue(driverRating);
+		;
+		
+		query = prepareQuery.getQuery();
+		try {
+			database.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("exception received "+e);
+			return false;
+		}
+		return true;
+		
 	}
 
 }

@@ -86,6 +86,19 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         	}
         }) 
  //--------------------------------------------------------------------------------------------       
+        .state('app.historyDriver',{
+        	url: 'historyDriver',
+        	views: {
+        		'header@':{
+        			templateUrl: 'resources/html/header.html'
+        		},
+        		'content@':{
+        			templateUrl: 'resources/html/driver/historyDriver.html',
+        			controller: 'historyDriverController'
+        		}
+        	}
+        }) 
+ //--------------------------------------------------------------------------------------------
            .state('app.driver',{
         	url: 'driver',
         	views: {
@@ -126,13 +139,13 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         })
 //-----------------------------------------------------------------------------------------------------        
         .state('app.passengerRating',{
-        	url: 'rating',
+        	url: 'rating1',
         	views: {
         		'header@':{
         			templateUrl: 'resources/html/header.html'
         		},
         		'content@':{
-        			templateUrl: 'resources/html/driver/passengerRating.html',
+        			templateUrl: 'resources/html/passenger/passengerRating.html',
         			controller: 'dRatingController'
         		}
         	}
@@ -428,10 +441,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       }).then(function(data){
 		     //  }).then(function(){
 		           console.log(data);
-		    	   if(data.status==200){
-		               console.log(data.token);          
-		    		   $state.transitionTo("app.requested");
-		            }
+		           if(data.status==200){
+		           console.log(data.token);          
+	    		   $state.transitionTo("app.requested");
+	    		 //  $scope.poll();
+		           }
 		           else{
 		               
 		
@@ -439,6 +453,41 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		       })
 	       
 	   }
+  	   
+  /*	 $scope.poll = function(){
+		 console.log('Inside poll');
+		 $http({
+	           method:'GET',
+	           url:'/grabCab/isRideAccepted',
+	           headers: {"Content-Type":"application/x-www-form-urlencoded"}
+	       }).then(function (response){ 
+	    	   console.log(response);
+	    	   
+	    	   $scope.value = response.data;
+	    	   console.log("Scope value in response***",$scope.value);
+	    	   console.log("Ride Status in response***",$scope.value.rideStatus );
+	    	   while($scope.value.rideStatus == null )
+	    		{
+	    		  console.log("Ride Status in request ride***",$scope.value.rideStatus );
+	    		  $scope.poll(); 
+	    		}
+	    	   
+	    	       if($scope.value.rideStatus =='A')
+	    	       { 
+	    	    	 console.log("Ride Accepted*****",response );
+	    	    	 while($scope.value.rideStatus != 'C')
+		    		 {
+	    	    		 $scope.poll();
+		    		 }
+	    	    	 
+	    	       }
+
+	    	    	 if($scope.value.rideStatus=='C'){
+			    	       console.log('Complete');
+			    	 }
+	    	       
+	        })
+	 } */
   	  //Swati:Redirection to history -----------------------------------------------------------------------
   	 $scope.history=function(){  	         
 	    		   $state.transitionTo("app.passengerHistory");
@@ -447,10 +496,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
   	   
      }])
      
-     
+   
 //Swati:polling and presenting driver details   on on progress page in passenger's application page ----------------------
      routerApp.controller('Ctrl1',['$scope','$http','$state','$window','$interval',function($scope,$http,$state,$window,$interval){
-    	 var poll=function(){
+    /*	 var poll = function(){
     		 
     		 $interval(function(){
     			 $http({
@@ -458,35 +507,71 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 			           url:'/grabCab/isRideAccepted',
 			           headers: {"Content-Type":"application/x-www-form-urlencoded"}
 			       }).then(function (response){ 
-			        	   if(response.rideStatus== 'R'){
-			    	        	 console.log("in progress");
+			    	   console.log(response);
+			    	   $scope.value = response.data;
+			    	   console.log("Scope value in response***",$scope.value);
+			    	   console.log("Ride Status in response***",$scope.value.rideStatus );
+			    	   if($scope.value.rideStatus == 'R'){
+			    	        	// console.log("in progress");
 			    			   	poll();
 			        	   }
-			    	       else if(response.rideStatus=='A')
+			    	       else if($scope.value.rideStatus =='A')
 			    	       { 
+			    	    	 console.log("Ride Accepted*****",response );
 				    		   $scope.RideID=response.rideId;
 				        	   $scope.driverName=response.driverName;
 				        	   $scope.driverPhoneNumber=response.driverPhoneNumber;
-				        	   $scope.carType=response.carType; 		          
-				        	   return;
+				        	   $scope.carType=response.carType; 	          
+				        	  // return;
+			    	    	// $interval.cancel(poll);
+			    	    	 //$state.transitionTo("app.passengerRating");
 			    	       }
-			    	       else if(response.rideStatus=='C'){
+			    	   
+			    	       else {
+			    	    	 //if($scope.value.rideStatus=='C')
 			    	    	   $state.transitionTo("app.passengerRating");
 			    	       }
 			        });
 			        	   
 			        	   //case1.parent().parent().css({'display': 'none'});
-			       },1000);
+			       },10);
     		
 
     	    };     
-    	   poll();
+    	  poll();
+    	 */ 
+    	  $scope.CheckRideStatus=function(){  
+	  			 $http({
+			           method:'GET',
+			           url:'/grabCab/isRideAccepted',
+			           headers: {"Content-Type":"application/x-www-form-urlencoded"}
+			       }).then(function (response){ 
+			    	   console.log(response);
+			    	   $scope.value = response.data;
+			    	   console.log("Scope value in response***",$scope.value);
+			    	   console.log("Ride Status in response***",$scope.value.rideStatus );
+			    	   if($scope.value.rideStatus == 'R' || $scope.value.rideStatus == 'A' ){
+			    		   console.log("Ride Status inside ------------------>",$scope.value.rideStatus);
+			    	   }
+			    	   else if ($scope.value.rideStatus=='C'){
+			    		   console.log("State transition for passengerRating ------------------>",$scope.value.rideStatus);
+			    	    	   $state.transitionTo("app.passengerRating");
+			    	       }
+			        });
+	       
+	   }
+  
+    		 
+    	 
+    		 
     	   
     	 //Swati:Ride Cancellation  by passenger------------------------------------------------------------------------------
     	   $scope.Cancel=function(){  
+    		   console.log("inside Cancel Ride ------------->")
+      		 console.log("Cancellation Reason ", $scope.reason);
 	  		   $http({
-		           method:'PUT',
-		           url:'/grabCab/ride',
+		           method:'POST',
+		           url:'/grabCab/cancel',
 		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
 		           transformRequest: function(obj) {
 		               var str = [];
@@ -495,17 +580,17 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-                       rideid:response.rideId,
-		        	   Reason:$scope.Reason,
-		        	   rideStatus:'C'
+		        	   Reason:$scope.reason,
+		        	   rideStatus:'X'
 		           }
 		
 		       }).then(function(data){
 		           console.log(data);
+		           $state.transitionTo("app.passengerHome");
 		    	   if(data.status==200){
 		               console.log(data.token);  
 		               
-		    		   $state.transitionTo("app.passengerHome");
+		    		  // $state.transitionTo("app.passengerHome");
 		            }
 		           else{
 		               
@@ -610,7 +695,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-		        	   rideId:$scope.rideid,
+		        	   rideId:$scope.value.id,
 		        	   rideStatus:'C'
 		           }
 		
@@ -632,7 +717,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     	 //get request for ride id and status as in progress
     	 
     	 $http({
-             method:'get',
+             method:'GET',
              url:'/grabCab/status',
              headers: {"Content-Type":"application/x-www-form-urlencoded"},
              
@@ -640,10 +725,19 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             	 
              }
 
-         }).success(function(data){
+         }).success(function(response){
+        	 console.log("*****: ",response);
+        	console.log(response.id);
+        	 $scope.value = response;
+        	 console.log("After : ",$scope.value.id);
+        	// $scope.rideStatus=response.rideStatus;
+        /*	
+    	 }).success(function(){
         	 console.log(data);
-        	 console.log(data[0]);
-        	 console.log(data[0].reason);
+        	// console.log(response.rideid);
+        	 $scope.data=data;
+        	console.log(data[0]);
+        	
         	 $scope.data=data;
              if(data.statusCode==200){
 
@@ -655,7 +749,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     	            else{
 
 
-    	            }
+    	            }*/
     	        }).error(function(error){
     	        	console.log(error);
     	        })
@@ -665,10 +759,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      //
   //Kanika:Rating a passenger  ------------------------------------------------------------------------------------------------
       routerApp.controller('passengerRatingController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
+     
   	   $scope.rate=function(){  
+  		   console.log("Rating passenger....",$scope.UserRating);
 	  		   $http({
-		           method:'PUT',
-		           url:'/grabCab/ride',
+		           method:'POST',
+		           url:'/grabCab/ratepassenger',
 		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
 		           transformRequest: function(obj) {
 		               var str = [];
@@ -677,15 +773,16 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{
-		        	   RideId:$scope.RideId,
+		        	   RideId:$scope.rideid,
 		        	   UserRating:$scope.UserRating
 		           }
 		
 		       }).then(function(data){
-		           console.log(data);
+		           console.log("Rating Response data: ",data);
+		           $state.transitionTo("app.driver");
 		    	   if(data.status==200){
 		               console.log(data.token);          
-		    		   $state.transitionTo("app.driver");
+		    		   
 		            }
 		           else{
 		               
@@ -696,10 +793,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      }])
      //Swati:Rating Driver---------------------------------------------------------------------------------------------
       routerApp.controller('dRatingController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
-  	   $scope.rate=function(){  
-	  		   $http({
-		           method:'PUT',
-		           url:'/grabCab/ride',
+  	   $scope.rateDriver=function(){  
+  		 console.log("Rating Driver....",$scope.rating);
+	  		   $http({  
+		           method:'POST',
+		           url:'/grabCab/ride/ratedriver',
 		           headers: {"Content-Type":"application/x-www-form-urlencoded"},
 		           transformRequest: function(obj) {
 		               var str = [];
@@ -708,17 +806,19 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		               return str.join("&");
 		           },
 		           data:{//confirm raghu if we can do addition like this
-		        	   tip:$scope.tip,
-		        	   driverrating:$scope.driverrating
+		        	   
+		        	   driverrating:$scope.rating
 		        	   
 		           }
 		
 		       }).then(function(data){
 		           console.log(data);
+		           console.log("Driver successfully rated");
+		           $state.transitionTo("app.passengerHome");
 		    	   if(data.status==200){
 		               console.log(data.token);  
 		               console.log("Driver successfully rated");
-		    		   $state.transitionTo("app.passengerHome");
+		    		   
 		            }
 		           else{
 		               
@@ -743,7 +843,20 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	           }
 	
 	       }).success(function(data){
-	    	   if(data.status==200){
+	    	   console.log(data);
+	    	   console.log(data[0]);
+	        	 console.log(data[0].rideid);
+	        	$scope.data=data;
+	        	/* $scope.rideid=data.rideid;
+	               $scope.username=data.username; 
+	               $scope.pickuplocation=data.pickuplocation;
+	               $scope.starttime=data.starttime;
+	               $scope.dropofflocation=data.dropofflocation;
+	               $scope.endtime=data.endtime;
+	               $scope.cost=data.cost;
+	               $scope.cartype=data.cartype;
+	               $scope.cardnumber=data.cardnumber;
+	    		   
 	               $scope.rideid=data.rideid;
 	               $scope.username=response.username; 
 	               $scope.pickuplocation=response.pickuplocation;
@@ -752,8 +865,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	               $scope.endtime=response.endtime;
 	               $scope.cost=response.cost;
 	               $scope.cartype=response.cartype;
-	               $scope.cardnumber=response.cardnumber;
-	                
+	               $scope.cardnumber=response.cardnumber;   */
+	               if(data.status==200){     
 	            }
 	           else{
 	               
@@ -783,16 +896,20 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
           }
 
       }).success(function(data){
-   	   if(data.status==200){
-              $scope.rideid=data.rideid;
-              $scope.username=response.username; 
+    	  
+    	  console.log(data);
+   	   console.log(data[0]);
+       	 
+   	   
+              $scope.data=data;
+           /*   $scope.username=response.username; 
               $scope.pickuplocation=response.pickuplocation;
               $scope.starttime=response.starttime;
               $scope.dropofflocation=response.dropofflocation;
               $scope.endtime=response.endtime;
               $scope.cost=response.cost;
-              $scope.UserRating=response.UserRating;
-               
+              $scope.UserRating=response.UserRating;*/
+              if(data.status==200){   
            }
           else{
               

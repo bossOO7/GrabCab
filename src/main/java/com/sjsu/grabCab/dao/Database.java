@@ -1,5 +1,8 @@
 package com.sjsu.grabCab.dao;
 
+import java.sql.CallableStatement;
+
+import com.datastax.driver.core.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
+
+
 
 @Component
 public class Database {
@@ -74,6 +79,111 @@ public class Database {
 			}
 
 		}
+
+	}
+	
+	public void executeStoredProcedure(String sql, int rideId) throws SQLException{
+		
+        String updateStoredProc ="{call sp_PromoCostCalculation(?,?)}";
+        CallableStatement callableStatement = null;
+		Connection connection = DriverManager.getConnection("jdbc:mysql://cmpe226grabcab.cdxflcl8qqin.us-west-1.rds.amazonaws.com:3306/cmpe226","grabCab","cmpe226grabcab");
+        try {
+			callableStatement = connection.prepareCall(updateStoredProc);
+			
+			System.out.println("IN Database: SP eamil : "+sql);
+
+			callableStatement.setString(1, sql);
+			
+			callableStatement.setInt(2, rideId);
+			
+			callableStatement.execute();
+
+			System.out.println("Record is updated to DBUSER table!");
+		
+			
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+			
+
+		} finally {
+
+			if (callableStatement != null) {
+				callableStatement.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+
+		}
+
+	}
+	
+public void executeStoredProcedureSetCost(int rideid) throws SQLException{
+		
+        String updateStoredProc ="{call sp_DefaultCostPD(?)}";
+        CallableStatement callableStatement = null;
+		Connection connection = DriverManager.getConnection("jdbc:mysql://cmpe226grabcab.cdxflcl8qqin.us-west-1.rds.amazonaws.com:3306/cmpe226","grabCab","cmpe226grabcab");
+        try {
+			callableStatement = connection.prepareCall(updateStoredProc);
+			
+			System.out.println("IN Database: SP cost : "+rideid);
+
+			callableStatement.setInt(1, rideid);
+			
+			callableStatement.execute();
+
+			System.out.println("Record is updated to DBUSER table!");
+		
+			
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+			
+
+		} finally {
+
+			if (callableStatement != null) {
+				callableStatement.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+
+		}
+
+	}
+	
+	
+	
+	public boolean executeCassandra(int rideId, String email, String pickUpLocation, String dropOffLocation, String carType, String licenseNumber, String rideStatus) throws SQLException{
+		System.out.println("Executing Cassandra query: ");
+
+		Cluster cluster=null;
+		Session session;
+		try{
+			cluster = Cluster.builder().addContactPoints("34.216.16.158").build();
+			session = cluster.connect("grabcab");
+			
+			PreparedStatement statement = session.prepare("Insert into Ride (rideid, email, pickUpLocation, dropOffLocation, carType, licenseNumber, rideStatus) values(?,?,?,?,?,?,?)");
+			BoundStatement boundStatement = new BoundStatement(statement);
+			
+			session.execute(boundStatement.bind(rideId, email, pickUpLocation, dropOffLocation,  carType, licenseNumber, rideStatus));
+		}catch (Exception e) {
+
+			System.out.println(e.getMessage());
+			
+
+		}
+		finally {
+			cluster.close();
+		}
+		return true;
+		
 
 	}
 	

@@ -1,35 +1,51 @@
 <html ng-app='routerApp'>
 <head>
     <title></title>
+<style>
+body{
+   
+    
+    background-image: url("https://www.picwallz.com/wp-content/uploads/2017/02/wallpaper-car-background-hd-pulse-on-cars-image-for-mobile-grey.jpeg");
+    background-repeat: no-repeat;
+    background-size: 1440px 1000px ;
+}
+</style>
 </head>
 <body>
-
+<div  class="container-fluid">
+	<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-9">
 <h1> <center>Passenger History</center></h1>
     <table>
     <tr>
-        <td>RideId</td>
-        <td>DriverName</td>
-        <td>Pickup</td>
-        <td>StartedAt</td>
-        <td>DropOff</td>
-        <td>EndedAt</td>
-        <td>Cost</td>
-        <td>CarType</td>
-        <td>CardNumber</td>
+    <!--  <div class = "row">
+    <div class = "col-md-1">-->
+        <th>Ride-Id&nbsp;&nbsp;&nbsp;</th>
+        <th>Driver-Name&nbsp;&nbsp;&nbsp;</th>
+        <th>Pickup-Location&nbsp;&nbsp;&nbsp;</th>
+        <th>Start-Time&nbsp;&nbsp;&nbsp;</th>
+        <th>DropOff-Location&nbsp;&nbsp;&nbsp;</th>
+        <th>End-Time&nbsp;&nbsp;&nbsp;</th>
+        <th>CarType&nbsp;&nbsp;&nbsp;</th>
+        <th>Cost&nbsp;&nbsp;&nbsp;</th>
+        <th>CardNumber&nbsp;&nbsp;&nbsp;</th>
      </tr>
 <tr ng-repeat="ride in data">
         <td>{{ride.rideid}}</td>
         <td>{{ride.username}}</td>
         <td>{{ride.pickuplocation}}</td>
-        <td>{{ride.starttime}}</td>
-        <td>{{ride.dropofflocation}}</td>
+        <td>{{ride.starttime}}&nbsp;&nbsp;&nbsp;</td>
+        <td>{{ride.dropofflocation}}&nbsp;&nbsp;&nbsp;</td>
         <td>{{ride.endtime}}</td>
-        <td>{{ride.cost}}</td>
         <td>{{ride.cartype}}</td>
+        <td>{{ride.cost}}</td>
         <td>{{ride.cardnumber}}</td>
 
 </tr>
 </table>
+</div>
+</div>
     
     <form>
 			<h3></h3>

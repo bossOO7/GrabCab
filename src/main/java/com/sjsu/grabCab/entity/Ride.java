@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 @Entity
 public class Ride {
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private Long rideId;
 	
 	private Date startTime;
@@ -32,9 +32,7 @@ public class Ride {
 	
 	private String passengerRating;
 	
-	public Ride(){
-		
-	}
+	
 	
 	
 	
@@ -56,6 +54,46 @@ public class Ride {
 		this.licenseNumber = licenseNumber;
 		this.email = email;
 	}
+	
+	
+
+	public Ride(int id) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
+
+	public Ride() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Ride(Long i, String string) {
+		// TODO Auto-generated constructor stub
+		this.rideId = i;
+		this.rideStatus = string;
+	}
+
+	
+
+	public Ride(Long rideid2, String rideStatus2, String email2) {
+		// TODO Auto-generated constructor stub
+		this.rideId = rideid2;
+		this.rideStatus =rideStatus2;
+		this.email =email2;
+	}
+
+
+
+	public Ride(String rideStatus2) {
+		this.rideStatus = rideStatus2;
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	public Long getId() {
 		return rideId;
